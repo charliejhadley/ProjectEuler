@@ -1,0 +1,338 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     10675,        329]
+NotebookOptionsPosition[      9285,        275]
+NotebookOutlinePosition[      9643,        291]
+CellTagsIndexPosition[      9600,        288]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 3", "Title",
+ CellChangeTimes->{{3.6355299864976044`*^9, 3.635529991435379*^9}, {
+  3.635530575598774*^9, 3.635530575676938*^9}, {3.635531593611895*^9, 
+  3.6355315938462763`*^9}}],
+
+Cell["Largest Prime Factor", "Subtitle",
+ CellChangeTimes->{{3.6355316698853617`*^9, 3.63553167291407*^9}}],
+
+Cell["The prime factors of 13195 are 5, 7, 13 and 29.", "Text",
+ CellChangeTimes->{3.6355300019098396`*^9, 3.6355305928488913`*^9, 
+  3.6355316246077943`*^9}],
+
+Cell["\<\
+What is the largest prime factor of the number 600,851,475,143 ?\
+\>", "Text",
+ CellChangeTimes->{{3.6355316379630175`*^9, 3.6355316464104958`*^9}, {
+  3.6369140791125674`*^9, 3.636914085600162*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FactorInteger", "[", "600851475143", "]"}]], "Input",
+ CellChangeTimes->{{3.636913547804511*^9, 3.636913585027835*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"71", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"839", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1471", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6857", ",", "1"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.636913560620558*^9, 3.6369135859004498`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eratosthenes Sieve", "Section",
+ CellChangeTimes->{{3.6355317590339365`*^9, 3.6355317612020707`*^9}, {
+  3.635536092831925*^9, 3.635536095298173*^9}}],
+
+Cell["Sieving first turns out to be inefficient:", "Text",
+ CellChangeTimes->{{3.6373434060064573`*^9, 3.6373434215089817`*^9}, {
+  3.639554560524521*^9, 3.639554570737816*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eratosSieve", "[", "max_Real", "]"}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"integers", "=", 
+       RowBox[{"N", "@", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "max"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"newPrimes", "=", "2."}], ",", "\[IndentingNewLine]", 
+      "multiples", ",", "\[IndentingNewLine]", "primes"}], 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"multiples", "=", 
+      RowBox[{"integers", "[", 
+       RowBox[{"[", 
+        RowBox[{";;", ";;", "2"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"newPrimes", "^", "2"}], "<", "max"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"multiples", "=", 
+         RowBox[{"Union", "@", 
+          RowBox[{"Join", "[", 
+           RowBox[{"multiples", ",", 
+            RowBox[{"NestWhileList", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"#", "+", 
+                RowBox[{"2", "*", "newPrimes"}]}], "&"}], ",", 
+              RowBox[{"newPrimes", "^", "2"}], ",", 
+              RowBox[{
+               RowBox[{"#", "<", "max"}], "&"}]}], "]"}]}], "]"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"newPrimes", "=", 
+         RowBox[{"SelectFirst", "[", 
+          RowBox[{
+           RowBox[{"Complement", "[", 
+            RowBox[{"integers", ",", "multiples"}], "]"}], ",", 
+           RowBox[{
+            RowBox[{"#", ">", "newPrimes"}], "&"}], ",", 
+           RowBox[{"Break", "[", "]"}]}], "]"}]}], ";"}]}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Print", "[", "multiples", "]"}], "*)"}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"primes", "=", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"{", "2.", "}"}], ",", 
+        RowBox[{"Complement", "[", 
+         RowBox[{"integers", ",", "multiples"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Length", "[", "primes", "]"}], ",", "primes"}], "}"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{3.63955282678601*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"eratosSieve", "[", "1475143.", "]"}], ";"}], "//", 
+  "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.639552838278679*^9, 3.639552862507073*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "24.30139600000000044133230403531342744827`7.406231135753764", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.639552849144731*^9, 3.639552887122696*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"eratosSieve", "[", "51475143.", "]"}], ";"}], "//", 
+  "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.639552838278679*^9, 3.6395528741786747`*^9}}],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{3.639553440511725*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"eratosSieve", "[", "51475143.", "]"}], ";"}], "//", 
+  "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.639552838278679*^9, 3.639552892710202*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Directly calculate", "Section",
+ CellChangeTimes->{{3.639553443964465*^9, 3.639553448194182*^9}, {
+  3.639554699555546*^9, 3.639554702173862*^9}}],
+
+Cell["\<\
+This algorithm finds the largest factor for a number by continuous division \
+of the first factor found - when no further division is possible (the reduced \
+factor is prime) the largest prime factor has been found.\
+\>", "Text",
+ CellChangeTimes->{{3.639554703636243*^9, 3.639554781375113*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"largestFactor", "[", "target_Real", "]"}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"number2Factor", "=", "target"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"currentDivisor", "=", "2."}], ",", "\[IndentingNewLine]", 
+      RowBox[{"largestDivisor", "=", "0."}]}], "\[IndentingNewLine]", "}"}], 
+    ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"While", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"currentDivisor", "=!=", "number2Factor"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Mod", "[", 
+           RowBox[{"number2Factor", ",", "currentDivisor"}], "]"}], 
+          "\[Equal]", "0"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"largestDivisor", "=", "currentDivisor"}], ";", 
+          RowBox[{"number2Factor", "=", 
+           RowBox[{"(", 
+            RowBox[{"number2Factor", "/", "currentDivisor"}], ")"}]}], ";", 
+          RowBox[{"currentDivisor", "=", "2."}]}], ",", "\[IndentingNewLine]", 
+         RowBox[{"currentDivisor", "++"}]}], "\[IndentingNewLine]", "]"}]}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"largestDivisor", "=", "currentDivisor"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6395541020216007`*^9, 3.639554142177994*^9}, {
+   3.639554179311799*^9, 3.639554209091035*^9}, {3.639554290924914*^9, 
+   3.6395543058126907`*^9}, {3.639554343665826*^9, 3.639554344115487*^9}, {
+   3.639554392379283*^9, 3.639554413603113*^9}, 3.6395544527028093`*^9, {
+   3.639554489210627*^9, 3.639554504824812*^9}, {3.639555326892161*^9, 
+   3.6395553288667593`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AbsoluteTiming", "[", 
+  RowBox[{
+   RowBox[{"foo", "=", 
+    RowBox[{"largestFactor", "[", "600851475143.", "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6395541453081493`*^9, 3.639554151714178*^9}, {
+   3.639554216741858*^9, 3.639554222860766*^9}, 3.639554253161145*^9, {
+   3.6395543129255323`*^9, 3.6395543494733477`*^9}, {3.639554421128952*^9, 
+   3.639554534805965*^9}, {3.639554804646837*^9, 3.639554811065482*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.02109600000000000016853185513809876284`4.344800030065002", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.639554535089632*^9, 3.639554811483343*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["foo"], "Input",
+ CellChangeTimes->{{3.639554813632869*^9, 3.63955481387926*^9}}],
+
+Cell[BoxData["6857.`"], "Output",
+ CellChangeTimes->{3.6395548143005743`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FactorInteger", "[", "600851475143", "]"}]], "Input",
+ CellChangeTimes->{{3.639554818361512*^9, 3.639554820538862*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"71", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"839", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1471", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6857", ",", "1"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.639554820939724*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1280, 1330},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 200, 3, 92, "Title"],
+Cell[783, 27, 107, 1, 51, "Subtitle"],
+Cell[893, 30, 158, 2, 30, "Text"],
+Cell[1054, 34, 209, 4, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1288, 42, 143, 2, 28, "Input"],
+Cell[1434, 46, 366, 11, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1837, 62, 156, 2, 64, "Section"],
+Cell[1996, 66, 177, 2, 30, "Text"],
+Cell[2176, 70, 2384, 61, 301, "Input"],
+Cell[CellGroupData[{
+Cell[4585, 135, 196, 5, 28, "Input"],
+Cell[4784, 142, 205, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5026, 152, 199, 5, 28, "Input"],
+Cell[5228, 159, 77, 1, 28, "Output"]
+}, Open  ]],
+Cell[5320, 163, 197, 5, 28, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5554, 173, 152, 2, 64, "Section"],
+Cell[5709, 177, 305, 5, 49, "Text"],
+Cell[6017, 184, 1805, 37, 267, "Input"],
+Cell[CellGroupData[{
+Cell[7847, 225, 458, 9, 28, "Input"],
+Cell[8308, 236, 203, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8548, 246, 94, 1, 28, "Input"],
+Cell[8645, 249, 77, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8759, 255, 143, 2, 28, "Input"],
+Cell[8905, 259, 340, 11, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
