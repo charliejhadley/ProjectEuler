@@ -1,0 +1,154 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4479,        145]
+NotebookOptionsPosition[      3837,        118]
+NotebookOutlinePosition[      4181,        133]
+CellTagsIndexPosition[      4138,        130]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 22", "Title",
+ CellChangeTimes->{{3.638679863619196*^9, 3.6386798846342545`*^9}, {
+  3.639132299743275*^9, 3.639132299823331*^9}, {3.6392243101147814`*^9, 
+  3.63922431022686*^9}}],
+
+Cell["Names Score", "Subtitle",
+ CellChangeTimes->{{3.6386798963888187`*^9, 3.6386799005188065`*^9}, {
+  3.639132310128646*^9, 3.639132312583931*^9}, {3.6392243127636657`*^9, 
+  3.639224314210689*^9}}],
+
+Cell["\<\
+Using names.txt (right click and \[OpenCurlyQuote]Save Link/Target As...\
+\[CloseCurlyQuote]), a 46K text file containing over five-thousand first \
+names, begin by sorting it into alphabetical order. Then working out the \
+alphabetical value for each name, multiply this value by its alphabetical \
+position in the list to obtain a name score.
+
+For example, when the list is sorted into alphabetical order, COLIN, which is \
+worth 3 + 15 + 12 + 9 + 14 = 53, is the 938th name in the list. So, COLIN \
+would obtain a score of 938 \[Times] 53 = 49714.
+
+What is the total of all the name scores in the file?\
+\>", "Text",
+ CellChangeTimes->{3.638679911470442*^9, 3.6391323072245407`*^9, 
+  3.6392243226696925`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"FileNames", "[", "\"\<*.txt\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.639224341689191*^9, 3.6392243618280563`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "\<\"p022_names.txt\"\>", "}"}]], "Output",
+ CellChangeTimes->{3.6392243626336284`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"letterReplacements", "=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"\"\<\\\"\>\"", "\[Rule]", 
+      RowBox[{"{", "}"}]}], "}"}], "~", "Join", "~", 
+    RowBox[{"Thread", "[", 
+     RowBox[{
+      RowBox[{"CharacterRange", "[", 
+       RowBox[{"\"\<A\>\"", ",", "\"\<Z\>\""}], "]"}], "\[Rule]", 
+      RowBox[{"Range", "[", "26", "]"}]}], "]"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6392244306377935`*^9, 3.6392244425878515`*^9}, {
+  3.6392245319489965`*^9, 3.6392245594195986`*^9}, {3.639224649764432*^9, 
+  3.6392246997961884`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"scores", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Total", "@", 
+      RowBox[{"Flatten", "[", 
+       RowBox[{
+        RowBox[{"Characters", "[", "#", "]"}], "/.", "letterReplacements"}], 
+       "]"}]}], "&"}], "/@", 
+    RowBox[{"Sort", "@", 
+     RowBox[{"StringSplit", "[", 
+      RowBox[{
+       RowBox[{"Import", "[", "\"\<p022_names.txt\>\"", "]"}], ",", 
+       "\"\<,\>\""}], "]"}]}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6392243680524745`*^9, 3.639224416051816*^9}, {
+  3.63922458070877*^9, 3.639224618067858*^9}, {3.639224707923958*^9, 
+  3.639224737675707*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Total", "[", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"i", "*", 
+     RowBox[{"scores", "[", 
+      RowBox[{"[", "i", "]"}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", 
+      RowBox[{"Length", "[", "scores", "]"}]}], "}"}]}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.639224797747954*^9, 3.639224823371978*^9}}],
+
+Cell[BoxData["871198282"], "Output",
+ CellChangeTimes->{3.6392248239345026`*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 544},
+WindowMargins->{{Automatic, 33}, {1, Automatic}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (December 4, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 200, 3, 90, "Title"],
+Cell[783, 27, 201, 3, 49, "Subtitle"],
+Cell[987, 32, 722, 14, 163, "Text"],
+Cell[CellGroupData[{
+Cell[1734, 50, 271, 6, 52, "Input"],
+Cell[2008, 58, 115, 2, 31, "Output"]
+}, Open  ]],
+Cell[2138, 63, 578, 14, 52, "Input"],
+Cell[2719, 79, 618, 17, 52, "Input"],
+Cell[CellGroupData[{
+Cell[3362, 100, 364, 11, 31, "Input"],
+Cell[3729, 113, 80, 1, 31, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

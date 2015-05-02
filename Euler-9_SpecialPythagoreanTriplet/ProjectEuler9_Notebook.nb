@@ -1,0 +1,229 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6435,        220]
+NotebookOptionsPosition[      5373,        177]
+NotebookOutlinePosition[      5733,        193]
+CellTagsIndexPosition[      5690,        190]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 9", "Title",
+ CellChangeTimes->{{3.6355299864976044`*^9, 3.635529991435379*^9}, {
+  3.635530575598774*^9, 3.635530575676938*^9}, {3.635531593611895*^9, 
+  3.6355315938462763`*^9}, {3.6369732943055286`*^9, 3.6369732944461126`*^9}, {
+  3.636975808575789*^9, 3.636975840195999*^9}, {3.6369762087977*^9, 
+  3.636976209282039*^9}, {3.6370622846553974`*^9, 3.6370622878631687`*^9}}],
+
+Cell["Special Pythagorean Triplet", "Subtitle",
+ CellChangeTimes->{{3.6355316698853617`*^9, 3.63553167291407*^9}, 
+   3.6369733007075033`*^9, 3.636973776035263*^9, 3.6369758501974087`*^9, {
+   3.6369762145404625`*^9, 3.6369762169476795`*^9}, {3.637062298120735*^9, 
+   3.637062308849976*^9}, {3.637064398913426*^9, 3.637064400099512*^9}}],
+
+Cell["\<\
+A pythagorean triplet is a set of three natural numbers a< b < c for which
+
+a^2 + b^2 = c^2
+
+For example 3^2+4^2=5^2
+
+There exists one Pythagorean triple for which a+b+c=1000, find the product of \
+a*b*c\
+\>", "Text",
+ CellChangeTimes->{
+  3.6369762282497034`*^9, {3.6370623130854225`*^9, 3.637062373518439*^9}, {
+   3.6370629099515905`*^9, 3.6370629347216663`*^9}, 3.637063236432003*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Try Solve Directly:", "Section",
+ CellChangeTimes->{{3.6370629415536127`*^9, 3.6370629679965105`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Solve", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"0", "<", "a", "<", "b", "<", "c"}], "&&", 
+    RowBox[{
+     RowBox[{"a", "+", "b", "+", "c"}], "\[Equal]", "1000"}], "&&", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"a", "^", "2"}], "+", 
+      RowBox[{"b", "^", "2"}]}], "\[Equal]", 
+     RowBox[{"c", "^", "2"}]}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", "b", ",", "c"}], "}"}], ",", "Integers"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.637062969510441*^9, 3.6370630902759504`*^9}, {
+  3.637063239419138*^9, 3.6370632434397135`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"a", "\[Rule]", "200"}], ",", 
+    RowBox[{"b", "\[Rule]", "375"}], ",", 
+    RowBox[{"c", "\[Rule]", "425"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.637063005526718*^9, {3.63706304474918*^9, 3.6370630907610636`*^9}, {
+   3.6370632399669113`*^9, 3.6370632439552994`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"a", "*", "b", "*", "c"}], "/.", "%"}]], "Input",
+ CellChangeTimes->{{3.637063255272166*^9, 3.6370632607949276`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "31875000", "}"}]], "Output",
+ CellChangeTimes->{3.6370632612956443`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Find all pythag triples less than 1000:", "Section",
+ CellChangeTimes->{{3.637063288964808*^9, 3.637063297870998*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"possibleABs", "=", 
+   RowBox[{"Subsets", "[", 
+    RowBox[{
+     RowBox[{"Range", "[", "990", "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6370634051402884`*^9, 3.6370634830852904`*^9}, {
+  3.6370635668615026`*^9, 3.637063574850102*^9}, {3.637063673746262*^9, 
+  3.6370636770252285`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"sumLess1000", "=", 
+   RowBox[{"Cases", "[", 
+    RowBox[{"possibleABs", ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"a_", ",", "b_"}], "}"}], "/;", 
+       RowBox[{
+        RowBox[{"a", "+", "b"}], "<", "1000"}]}], "\[RuleDelayed]", 
+      RowBox[{"{", 
+       RowBox[{"a", ",", "b", ",", 
+        RowBox[{"1000", "-", "a", "-", "b"}]}], "}"}]}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.637063703609667*^9, 3.637063824727292*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"pythagTriple", "=", 
+  RowBox[{"Select", "[", 
+   RowBox[{"sumLess1000", ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "^", "2"}], "+", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], "^", "2"}]}], "\[Equal]", 
+      RowBox[{
+       RowBox[{"#", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], "^", "2"}]}], "&"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.637063847367982*^9, 3.637063890397149*^9}, {
+  3.6370639211915035`*^9, 3.637063941123849*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"200", ",", "375", ",", "425"}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.6370638929649773`*^9, 3.63706394259109*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Times", "@@@", "pythagTriple"}]], "Input",
+ CellChangeTimes->{{3.63706394710919*^9, 3.6370639535375423`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "31875000", "}"}]], "Output",
+ CellChangeTimes->{3.6370639539136105`*^9}]
+}, Open  ]],
+
+Cell[BoxData["318"], "Input",
+ CellChangeTimes->{{3.6370641060980735`*^9, 3.6370641080997524`*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{752, 767},
+WindowMargins->{{Automatic, 258}, {267, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 396, 5, 92, "Title"],
+Cell[979, 29, 338, 4, 51, "Subtitle"],
+Cell[1320, 35, 398, 12, 144, "Text"],
+Cell[CellGroupData[{
+Cell[1743, 51, 108, 1, 64, "Section"],
+Cell[CellGroupData[{
+Cell[1876, 56, 569, 16, 28, "Input"],
+Cell[2448, 74, 352, 9, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2837, 88, 151, 3, 28, "Input"],
+Cell[2991, 93, 101, 2, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3141, 101, 124, 1, 64, "Section"],
+Cell[3268, 104, 372, 9, 28, "Input"],
+Cell[3643, 115, 507, 15, 28, "Input"],
+Cell[CellGroupData[{
+Cell[4175, 134, 601, 18, 28, "Input"],
+Cell[4779, 154, 178, 4, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4994, 163, 133, 2, 28, "Input"],
+Cell[5130, 167, 101, 2, 28, "Output"]
+}, Open  ]],
+Cell[5246, 172, 99, 1, 28, "Input"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

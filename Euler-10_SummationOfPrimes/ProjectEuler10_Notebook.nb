@@ -1,0 +1,221 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6867,        212]
+NotebookOptionsPosition[      5956,        175]
+NotebookOutlinePosition[      6314,        191]
+CellTagsIndexPosition[      6271,        188]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 10", "Title",
+ CellChangeTimes->{{3.6355299864976044`*^9, 3.635529991435379*^9}, {
+  3.635530575598774*^9, 3.635530575676938*^9}, {3.635531593611895*^9, 
+  3.6355315938462763`*^9}, {3.6369732943055286`*^9, 3.6369732944461126`*^9}, {
+  3.636975808575789*^9, 3.636975840195999*^9}, {3.6369762087977*^9, 
+  3.636976209282039*^9}, {3.6376025120898314`*^9, 3.6376025130660777`*^9}, {
+  3.6377750450496855`*^9, 3.6377750453778124`*^9}}],
+
+Cell["Summation of Primes", "Subtitle",
+ CellChangeTimes->{{3.6355316698853617`*^9, 3.63553167291407*^9}, 
+   3.6369733007075033`*^9, 3.636973776035263*^9, 3.6369758501974087`*^9, {
+   3.6369762145404625`*^9, 3.6369762169476795`*^9}, {3.6376025155438747`*^9, 
+   3.6376025197608027`*^9}, {3.6377750501129208`*^9, 3.6377750540049663`*^9}}],
+
+Cell["\<\
+The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+Find the sum of all the primes below two million.\
+\>", "Text",
+ CellChangeTimes->{
+  3.6369762282497034`*^9, {3.637602526254651*^9, 3.637602547095122*^9}, {
+   3.63777506226434*^9, 3.637775072465888*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Eratosthenes Sieve", "Section",
+ CellChangeTimes->{{3.637775140986941*^9, 3.6377751666921663`*^9}}],
+
+Cell["Taking the current version of the Eratosthenes sieve", "Text",
+ CellChangeTimes->{{3.637775151702119*^9, 3.637775164519977*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eratosSieve", "[", "max_Real", "]"}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"integers", "=", 
+       RowBox[{"N", "@", 
+        RowBox[{"Range", "[", 
+         RowBox[{"2", ",", "max"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"newPrimes", "=", "2."}], ",", "\[IndentingNewLine]", 
+      "multiples", ",", "\[IndentingNewLine]", "primes"}], 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"multiples", "=", 
+      RowBox[{"integers", "[", 
+       RowBox[{"[", 
+        RowBox[{";;", ";;", "2"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"newPrimes", "^", "2"}], "<", "max"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"multiples", "=", 
+         RowBox[{"Union", "@", 
+          RowBox[{"Join", "[", 
+           RowBox[{"multiples", ",", 
+            RowBox[{"NestWhileList", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"#", "+", 
+                RowBox[{"2", "*", "newPrimes"}]}], "&"}], ",", 
+              RowBox[{"newPrimes", "^", "2"}], ",", 
+              RowBox[{
+               RowBox[{"#", "<", "max"}], "&"}]}], "]"}]}], "]"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"newPrimes", "=", 
+         RowBox[{"SelectFirst", "[", 
+          RowBox[{
+           RowBox[{"Complement", "[", 
+            RowBox[{"integers", ",", "multiples"}], "]"}], ",", 
+           RowBox[{
+            RowBox[{"#", ">", "newPrimes"}], "&"}], ",", 
+           RowBox[{"Break", "[", "]"}]}], "]"}]}], ";"}]}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Print", "[", "multiples", "]"}], "*)"}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"primes", "=", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"{", "2.", "}"}], ",", 
+        RowBox[{"Complement", "[", 
+         RowBox[{"integers", ",", "multiples"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Length", "[", "primes", "]"}], ",", "primes"}], "}"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.639562344091648*^9, 3.639562345788752*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"primesUnder1E6", "=", 
+    RowBox[{"eratosSieve", "[", "2000000.", "]"}]}], ";"}], "//", 
+  "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.6377751706037226`*^9, 3.637775224966975*^9}, 
+   3.639562348378024*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "39.23112600000000327327143168076872825623`7.614230686577877", ",", 
+   "Null"}], "}"}]], "Output",
+ CellChangeTimes->{{3.637775172900605*^9, 3.6377751766493416`*^9}, 
+   3.6377752546812115`*^9, 3.639562391556931*^9}]
+}, Open  ]],
+
+Cell["How many primes?", "Text",
+ CellChangeTimes->{{3.637775269506257*^9, 3.637775275571249*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"primesUnder1E6", "[", 
+  RowBox[{"[", "1", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6377752591107297`*^9, 3.6377752623052425`*^9}}],
+
+Cell[BoxData["148933"], "Output",
+ CellChangeTimes->{3.637775263071059*^9, 3.639562398617587*^9}]
+}, Open  ]],
+
+Cell["Total:", "Text",
+ CellChangeTimes->{{3.637775279273672*^9, 3.637775281664607*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Total", "[", 
+   RowBox[{"primesUnder1E6", "[", 
+    RowBox[{"[", "2", "]"}], "]"}], "]"}], "//", "AccountingForm"}]], "Input",
+ CellChangeTimes->{{3.637775283736349*^9, 3.6377752910200806`*^9}, {
+  3.6377753581375446`*^9, 3.6377753614192095`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  InterpretationBox["\<\"142913828922.\"\>",
+   1.42913828922*^11,
+   AutoDelete->True],
+  AccountingForm]], "Output",
+ CellChangeTimes->{3.6377752932773843`*^9, 3.637775361778529*^9, 
+  3.639562399673355*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{752, 767},
+WindowMargins->{{Automatic, 201}, {Automatic, 3}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 450, 6, 92, "Title"],
+Cell[1033, 30, 338, 4, 51, "Subtitle"],
+Cell[1374, 36, 270, 7, 68, "Text"],
+Cell[CellGroupData[{
+Cell[1669, 47, 105, 1, 64, "Section"],
+Cell[1777, 50, 134, 1, 30, "Text"],
+Cell[1914, 53, 2409, 61, 352, "Input"],
+Cell[CellGroupData[{
+Cell[4348, 118, 262, 7, 28, "Input"],
+Cell[4613, 127, 259, 6, 28, "Output"]
+}, Open  ]],
+Cell[4887, 136, 98, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[5010, 141, 160, 3, 28, "Input"],
+Cell[5173, 146, 97, 1, 28, "Output"]
+}, Open  ]],
+Cell[5285, 150, 88, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[5398, 155, 283, 6, 28, "Input"],
+Cell[5684, 163, 232, 7, 39, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

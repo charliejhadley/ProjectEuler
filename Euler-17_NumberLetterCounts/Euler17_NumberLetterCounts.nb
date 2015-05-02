@@ -1,0 +1,587 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     20940,        578]
+NotebookOptionsPosition[     18997,        505]
+NotebookOutlinePosition[     19355,        521]
+CellTagsIndexPosition[     19312,        518]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Count Numbers", "Title",
+ CellChangeTimes->{{3.6362925663973184`*^9, 3.6362925751068473`*^9}}],
+
+Cell["\<\
+If the numbers 1 to 5 are written out in words: one, two, three, four, five, \
+then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
+
+If all the numbers from 1 to 1000 (one thousand) inclusive were written out \
+in words, how many letters would be used?\
+\>", "Text",
+ CellChangeTimes->{3.636292677708506*^9}],
+
+Cell["\<\
+NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and \
+forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 \
+letters. The use of \[OpenCurlyDoubleQuote]and\[CloseCurlyDoubleQuote] when \
+writing out numbers is in compliance with British usage.\
+\>", "Text",
+ CellChangeTimes->{3.6362926857494836`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Dictionary", "Section",
+ CellChangeTimes->{{3.63629269780965*^9, 3.636292701871067*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nineteenWords", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<one\>\"", ",", "\"\<two\>\"", ",", "\"\<three\>\"", ",", 
+     "\"\<four\>\"", ",", "\"\<five\>\"", ",", "\"\<six\>\"", ",", 
+     "\"\<seven\>\"", ",", "\"\<eight\>\"", ",", "\"\<nine\>\"", ",", 
+     "\"\<ten\>\"", ",", "\"\<eleven\>\"", ",", "\"\<twelve\>\"", ",", 
+     "\"\<thirteen\>\"", ",", "\"\<fourteen\>\"", ",", "\"\<fifteen\>\"", 
+     ",", "\"\<sixteen\>\"", ",", "\"\<seventeen\>\"", ",", 
+     "\"\<eighteen\>\"", ",", "\"\<nineteen\>\""}], "}"}]}], ";", 
+  RowBox[{"tensWords", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<twenty\>\"", ",", "\"\<thirty\>\"", ",", "\"\<forty\>\"", ",", 
+     "\"\<fifty\>\"", ",", "\"\<sixty\>\"", ",", "\"\<seventy\>\"", ",", 
+     "\"\<eighty\>\"", ",", "\"\<ninety\>\""}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hundredWord", "=", "\"\<hundred\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"thousandWord", "=", "\"\<one thousand\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"nineteenNumbers", "=", 
+   RowBox[{"Range", "[", "19", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tensNumbers", "=", 
+   RowBox[{"Range", "[", 
+    RowBox[{"20", ",", "90", ",", "10"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hundredNumber", "=", "100"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"thousandNumber", "=", "1000"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"nineteenDict", "=", 
+   RowBox[{"Thread", "[", 
+    RowBox[{"nineteenNumbers", "\[Rule]", "nineteenWords"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tensDict", "=", 
+   RowBox[{"Thread", "[", 
+    RowBox[{"tensNumbers", "\[Rule]", "tensWords"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hundredDict", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"i", "*", "100"}], "->", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"i", "/.", "nineteenDict"}], ")"}], "<>", 
+       "\"\< hundred\>\""}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", 
+       RowBox[{"Range", "[", 
+        RowBox[{"1", ",", "9"}], "]"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"thousandDict", "=", 
+   RowBox[{"thousandNumber", "\[Rule]", "thousandWord"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"numberDictionary", "=", 
+   RowBox[{"Flatten", "@", 
+    RowBox[{"Join", "[", 
+     RowBox[{"{", 
+      RowBox[{
+      "nineteenDict", ",", "tensDict", ",", "hundredDict", ",", 
+       "thousandDict"}], "}"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"numberKnown", "=", 
+   RowBox[{"numberDictionary", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.636292705515667*^9, 3.636292898885109*^9}, {
+   3.6362931581579885`*^9, 3.636293167572566*^9}, {3.6367063577040377`*^9, 
+   3.636706386197465*^9}, {3.6367064792589874`*^9, 3.63670652065514*^9}, {
+   3.6367065994212217`*^9, 3.636706603795826*^9}, {3.636706636538307*^9, 
+   3.6367066374349284`*^9}, 3.636706724817275*^9, 3.636706772417741*^9, {
+   3.6367315102881207`*^9, 3.6367315108213944`*^9}, 3.6367317054764867`*^9, {
+   3.639568253518065*^9, 3.6395682603026037`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "2", ",", "3", ",", "4", ",", "5", ",", "6", ",", "7", ",", "8", 
+   ",", "9", ",", "10", ",", "11", ",", "12", ",", "13", ",", "14", ",", "15",
+    ",", "16", ",", "17", ",", "18", ",", "19", ",", "20", ",", "30", ",", 
+   "40", ",", "50", ",", "60", ",", "70", ",", "80", ",", "90", ",", "100", 
+   ",", "200", ",", "300", ",", "400", ",", "500", ",", "600", ",", "700", 
+   ",", "800", ",", "900", ",", "1000"}], "}"}]], "Output",
+ CellChangeTimes->{{3.6367067599180202`*^9, 3.636706780214218*^9}, 
+   3.636729941434368*^9, {3.6367301356630244`*^9, 3.636730156462743*^9}, 
+   3.636731514693065*^9, 3.6367317140208483`*^9, {3.6367905647178154`*^9, 
+   3.636790590342758*^9}, 3.636790622050726*^9, 3.63679116168349*^9, 
+   3.6376536203529444`*^9, 3.637656296754995*^9, 3.6376564061774964`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["thousandDict"], "Input",
+ CellChangeTimes->{{3.6367911381131487`*^9, 3.6367911752676773`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"1000", "\[Rule]", "\<\"one thousand\"\>"}]], "Output",
+ CellChangeTimes->{{3.636791139347003*^9, 3.636791175624915*^9}, 
+   3.6376536213998165`*^9, 3.6376562968331203`*^9, 3.637656406333746*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Make Words", "Section",
+ CellChangeTimes->{{3.6362930134047165`*^9, 3.6362930201301756`*^9}, {
+  3.6367906661993375`*^9, 3.6367906685979996`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitInt", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"MemberQ", "[", 
+    RowBox[{"numberKnown", ",", "int"}], "]"}]}], ":=", 
+  RowBox[{"int", "/.", "numberDictionary"}]}]], "Input",
+ CellChangeTimes->{{3.6367067969703956`*^9, 3.6367068676000285`*^9}, 
+   3.636729476971923*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitInt", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"int", "<", "100"}]}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"split", "=", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"splitInt", "[", 
+          RowBox[{"10", "*", 
+           RowBox[{"IntegerPart", "[", 
+            RowBox[{"int", "/", "10"}], "]"}]}], "]"}], ",", "\"\<-\>\"", ",",
+          "\[IndentingNewLine]", 
+         RowBox[{"splitInt", "[", 
+          RowBox[{"10", "*", 
+           RowBox[{"FractionalPart", "[", 
+            RowBox[{"int", "/", "10"}], "]"}]}], "]"}]}], "}"}]}]}], 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"StringJoin", "[", 
+     RowBox[{"(*", 
+      RowBox[{"Riffle", "[", 
+       RowBox[{"split", ",", "\"\< \>\""}], "]"}], "*)"}], "split", "]"}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.636707172398838*^9, 3.636707192147437*^9}, {
+  3.636707243788286*^9, 3.6367072717323904`*^9}, {3.6367073162776785`*^9, 
+  3.6367074293632956`*^9}, {3.6367288332010746`*^9, 3.636728872233918*^9}, {
+  3.636728954382651*^9, 3.6367289918388157`*^9}, {3.6367290251432657`*^9, 
+  3.6367290429291906`*^9}, {3.636729082093684*^9, 3.6367292460976872`*^9}, {
+  3.636729516129572*^9, 3.636729521787427*^9}, {3.636729706749487*^9, 
+  3.6367297085185003`*^9}, {3.636730221136993*^9, 3.6367302522792006`*^9}, {
+  3.6367303188020716`*^9, 3.6367303928465166`*^9}, {3.636730783509797*^9, 
+  3.6367307846530237`*^9}, {3.636731387905403*^9, 3.6367314065085974`*^9}, {
+  3.6376536383957725`*^9, 3.6376536411544857`*^9}, {3.6376548977892027`*^9, 
+  3.6376548996399384`*^9}, {3.6376554013915663`*^9, 3.637655432858037*^9}, {
+  3.637656262048261*^9, 3.6376562729440536`*^9}, {3.6376563536236553`*^9, 
+  3.6376563825005894`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"splitInt", "[", "77", "]"}]], "Input",
+ CellChangeTimes->{{3.6376549107731824`*^9, 3.637654913492766*^9}}],
+
+Cell[BoxData["\<\"seventy-seven\"\>"], "Output",
+ CellChangeTimes->{
+  3.637654913992767*^9, {3.637655404537282*^9, 3.637655434139839*^9}, 
+   3.6376562744599113`*^9, 3.637656305249727*^9, 3.637656384360194*^9, 
+   3.637656416045937*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitInt", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"int", "<", "1000"}]}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"split", "=", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IntegerPart", "[", 
+           RowBox[{"int", "/", "100"}], "]"}], "/.", "numberDictionary"}], 
+         ",", "\[IndentingNewLine]", "\"\<hundred and\>\"", ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"splitInt", "[", 
+          RowBox[{"100", "*", 
+           RowBox[{"FractionalPart", "[", 
+            RowBox[{"int", "/", "100"}], "]"}]}], "]"}]}], 
+        "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"StringJoin", "[", 
+     RowBox[{"Riffle", "[", 
+      RowBox[{
+       RowBox[{"Flatten", "[", "split", "]"}], ",", "\"\< \>\""}], "]"}], 
+     "]"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6367292682512426`*^9, 3.636729464167447*^9}, 
+   3.636729533978078*^9, {3.63672969544907*^9, 3.6367296983480644`*^9}, {
+   3.6367304198156967`*^9, 3.636730463824177*^9}, 3.636730667091508*^9, {
+   3.6367308178647656`*^9, 3.636730824243901*^9}, {3.636730936009777*^9, 
+   3.6367309419637184`*^9}, {3.636731301889163*^9, 3.6367313326518707`*^9}, {
+   3.636731367539358*^9, 3.6367313700240307`*^9}, {3.6376536933626328`*^9, 
+   3.6376536985955877`*^9}, {3.6376549357444696`*^9, 3.6376549364944606`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"splitInt", "[", "1000", "]"}]], "Input",
+ CellChangeTimes->{{3.636729353258334*^9, 3.636729358105426*^9}, {
+  3.63672945097987*^9, 3.6367294518668118`*^9}, {3.6367294956210938`*^9, 
+  3.6367295047713556`*^9}, {3.636729715836198*^9, 3.636729716883086*^9}, {
+  3.6367298481071005`*^9, 3.6367298630336924`*^9}, {3.636730189908396*^9, 
+  3.6367301971564713`*^9}, {3.6367302915009604`*^9, 3.6367303123163376`*^9}, {
+  3.636730468912768*^9, 3.6367304793343773`*^9}, {3.6367314328035765`*^9, 
+  3.636731433441715*^9}, {3.6367906347045*^9, 3.636790649007433*^9}}],
+
+Cell[BoxData["\<\"one thousand\"\>"], "Output",
+ CellChangeTimes->{{3.63673080167318*^9, 3.6367308260777197`*^9}, 
+   3.6367309442612963`*^9, {3.63673131040323*^9, 3.6367313717037687`*^9}, {
+   3.636731409446419*^9, 3.636731433847911*^9}, {3.6367906330433474`*^9, 
+   3.6367906492946177`*^9}, 3.6367911819761553`*^9, 3.6376540571361675`*^9, 
+   3.6376549610129633`*^9, 3.6376563074999447`*^9, 3.637656420017271*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullForm", "[", 
+  RowBox[{"Riffle", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", "\"\< \>\""}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6376549755910516`*^9, 3.6376550020521765`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   RowBox[{"List", "[", 
+    RowBox[{"1", ",", "\"\< \>\"", ",", "2", ",", "\"\< \>\"", ",", "3"}], 
+    "]"}],
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Output",
+ CellChangeTimes->{{3.6376549837950845`*^9, 3.6376550025529633`*^9}, 
+   3.637656308234317*^9, 3.637656421017269*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LineSeparator]Less than 1,000,000", "Subsubsection",
+ CellChangeTimes->{{3.63765406243824*^9, 3.6376540688271646`*^9}, {
+   3.6376545886903024`*^9, 3.637654592598605*^9}, 3.6376563088437085`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitInt", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"int", "<", "1000000"}]}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"split", "=", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"splitInt", "[", 
+          RowBox[{"IntegerPart", "[", 
+           RowBox[{"int", "/", "1000"}], "]"}], "]"}], ",", 
+         "\[IndentingNewLine]", "\"\<thousand\>\"", ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"splitInt", "[", 
+          RowBox[{"1000", "*", 
+           RowBox[{"FractionalPart", "[", 
+            RowBox[{"int", "/", "1000"}], "]"}]}], "]"}]}], 
+        "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"StringJoin", "[", 
+     RowBox[{"Riffle", "[", 
+      RowBox[{
+       RowBox[{"Flatten", "[", "split", "]"}], ",", "\"\< \>\""}], "]"}], 
+     "]"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.637654088935881*^9, 3.6376540896633873`*^9}, {
+   3.6376541277984953`*^9, 3.637654192478882*^9}, {3.637654234338562*^9, 
+   3.6376542550627885`*^9}, {3.6376542876525264`*^9, 3.637654354010081*^9}, 
+   3.637654401875514*^9, 3.637654434403025*^9, {3.637654465925488*^9, 
+   3.6376544710130568`*^9}, {3.637654520560396*^9, 3.637654533924334*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"splitInt", "[", "971571", "]"}]], "Input",
+ CellChangeTimes->{{3.637654194994767*^9, 3.6376542063987184`*^9}, {
+  3.6376542417361794`*^9, 3.637654246972672*^9}, {3.6376543557759924`*^9, 
+  3.6376543565488467`*^9}, {3.6376545380515304`*^9, 3.637654560121645*^9}, {
+  3.637655456671846*^9, 3.637655456890584*^9}}],
+
+Cell[BoxData["\<\"nine hundred and seventy-one thousand five hundred and \
+seventy-one\"\>"], "Output",
+ CellChangeTimes->{{3.637654199936112*^9, 3.637654206742485*^9}, {
+   3.637654237972356*^9, 3.63765425664091*^9}, {3.6376542887618465`*^9, 
+   3.637654357111327*^9}, {3.6376544273253183`*^9, 3.6376544362938976`*^9}, 
+   3.6376544771218643`*^9, {3.637654522030989*^9, 3.637654560762268*^9}, 
+   3.637655129498761*^9, {3.6376554442800493`*^9, 3.6376554572499638`*^9}, 
+   3.63765631154697*^9, 3.637656423845667*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Count Letters", "Section",
+ CellChangeTimes->{{3.6367306833822865`*^9, 3.6367306845416574`*^9}, {
+  3.636790671286866*^9, 3.6367906732302103`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"?", "*Q"}]], "Input",
+ CellChangeTimes->{{3.637655201525197*^9, 3.63765520241581*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitIntCount", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"MemberQ", "[", 
+    RowBox[{"numberKnown", ",", "int"}], "]"}]}], ":=", 
+  RowBox[{"StringCount", "[", 
+   RowBox[{
+    RowBox[{"int", "/.", "numberDictionary"}], ",", 
+    RowBox[{"_", "?", "LetterQ"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitIntCount", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"int", "<", "100"}]}], ":=", 
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"split", "=", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"splitInt", "[", 
+          RowBox[{"10", "*", 
+           RowBox[{"IntegerPart", "[", 
+            RowBox[{"int", "/", "10"}], "]"}]}], "]"}], ",", "\"\<-\>\"", ",",
+          "\[IndentingNewLine]", 
+         RowBox[{"splitInt", "[", 
+          RowBox[{"10", "*", 
+           RowBox[{"FractionalPart", "[", 
+            RowBox[{"int", "/", "10"}], "]"}]}], "]"}]}], "}"}]}]}], "}"}], 
+    ",", "\[IndentingNewLine]", 
+    RowBox[{"Total", "@", 
+     RowBox[{"StringCount", "[", 
+      RowBox[{"split", ",", 
+       RowBox[{"_", "?", "LetterQ"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"splitIntCount", "[", "int_Integer", "]"}], "/;", 
+   RowBox[{"int", "<", "1000"}]}], ":=", 
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"split", "=", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IntegerPart", "[", 
+           RowBox[{"int", "/", "100"}], "]"}], "/.", "nineteenDict"}], ",", 
+         "\[IndentingNewLine]", "\"\<hundred and\>\"", ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"splitIntCount", "[", 
+          RowBox[{"100", "*", 
+           RowBox[{"FractionalPart", "[", 
+            RowBox[{"int", "/", "100"}], "]"}]}], "]"}]}], 
+        "\[IndentingNewLine]", "}"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Total", "[", 
+     RowBox[{"split", "/.", 
+      RowBox[{"a_String", "\[RuleDelayed]", 
+       RowBox[{"StringCount", "[", 
+        RowBox[{"a", ",", 
+         RowBox[{"_", "?", "LetterQ"}]}], "]"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.636730686562212*^9, 3.6367307105466433`*^9}, {
+   3.63673144415781*^9, 3.636731456017637*^9}, 3.639568363359168*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Apply to Range[1000]", "Section",
+ CellChangeTimes->{{3.6367906794545317`*^9, 3.6367906873500013`*^9}}],
+
+Cell["Check functions work identically:", "Text",
+ CellChangeTimes->{{3.6367907087978716`*^9, 3.636790716822439*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Tally", "[", 
+  RowBox[{"Map", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"StringCount", "[", 
+        RowBox[{
+         RowBox[{"splitInt", "[", "#", "]"}], ",", 
+         RowBox[{"_", "?", "LetterQ"}]}], "]"}], "==", 
+       RowBox[{"splitIntCount", "[", "#", "]"}]}], ")"}], "&"}], ",", 
+    RowBox[{"Range", "[", "1000", "]"}]}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.636790697091754*^9, 3.636790766605976*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"True", ",", "1000"}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.6367907259147377`*^9, 3.6367907671103244`*^9}, 
+   3.636791189597249*^9, 3.6376564328495016`*^9, 3.637656549271514*^9}]
+}, Open  ]],
+
+Cell["Total characters:", "Text",
+ CellChangeTimes->{{3.6367907777246847`*^9, 3.636790782100718*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"splitIntCount", "[", "#", "]"}], "&"}], "/@", 
+   RowBox[{"Range", "[", "1000", "]"}]}], "//", "Total"}]], "Input",
+ CellChangeTimes->{{3.636790786341679*^9, 3.636790812764987*^9}}],
+
+Cell[BoxData["21124"], "Output",
+ CellChangeTimes->{{3.636790805635042*^9, 3.6367908132873526`*^9}, 
+   3.636791190717995*^9, 3.6376564346866665`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1280, 1330},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 106, 1, 92, "Title"],
+Cell[689, 25, 326, 7, 68, "Text"],
+Cell[1018, 34, 357, 6, 49, "Text"],
+Cell[CellGroupData[{
+Cell[1400, 44, 94, 1, 64, "Section"],
+Cell[CellGroupData[{
+Cell[1519, 49, 3272, 83, 267, "Input"],
+Cell[4794, 134, 846, 13, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5677, 152, 108, 1, 28, "Input"],
+Cell[5788, 155, 218, 3, 28, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6055, 164, 152, 2, 64, "Section"],
+Cell[6210, 168, 329, 8, 28, "Input"],
+Cell[6542, 178, 1923, 39, 131, "Input"],
+Cell[CellGroupData[{
+Cell[8490, 221, 130, 2, 28, "Input"],
+Cell[8623, 225, 237, 4, 28, "Output"]
+}, Open  ]],
+Cell[8875, 232, 1568, 34, 165, "Input"],
+Cell[CellGroupData[{
+Cell[10468, 270, 579, 8, 28, "Input"],
+Cell[11050, 280, 415, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11502, 290, 260, 7, 28, "Input"],
+Cell[11765, 299, 375, 11, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12177, 315, 203, 2, 59, "Subsubsection"],
+Cell[12383, 319, 1410, 32, 165, "Input"],
+Cell[CellGroupData[{
+Cell[13818, 355, 335, 5, 28, "Input"],
+Cell[14156, 362, 517, 7, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14734, 376, 153, 2, 64, "Section"],
+Cell[14890, 380, 110, 2, 28, "Input"],
+Cell[15003, 384, 2396, 65, 199, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17436, 454, 109, 1, 64, "Section"],
+Cell[17548, 457, 117, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[17690, 462, 484, 13, 28, "Input"],
+Cell[18177, 477, 245, 5, 29, "Output"]
+}, Open  ]],
+Cell[18437, 485, 101, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[18563, 490, 241, 6, 28, "Input"],
+Cell[18807, 498, 150, 2, 29, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

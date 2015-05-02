@@ -1,0 +1,121 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3199,        112]
+NotebookOptionsPosition[      2657,         87]
+NotebookOutlinePosition[      3014,        103]
+CellTagsIndexPosition[      2971,        100]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 19", "Title",
+ CellChangeTimes->{{3.6381744897618284`*^9, 3.63817449236736*^9}, {
+  3.6382628803731413`*^9, 3.638262902390021*^9}, {3.6386992767373667`*^9, 
+  3.638699276938033*^9}}],
+
+Cell["Counting Sundays", "Subtitle",
+ CellChangeTimes->{{3.6381745037052317`*^9, 3.638174511255367*^9}, {
+  3.638262883513088*^9, 3.6382629090892177`*^9}, {3.63869930633617*^9, 
+  3.638699308656658*^9}}],
+
+Cell["\<\
+You are given the following information, but you may prefer to do some \
+research for yourself.
+
+1 Jan 1900 was a Monday.
+Thirty days has September,
+April, June and November.
+All the rest have thirty-one,
+Saving February alone,
+Which has twenty-eight, rain or shine.
+And on leap years, twenty-nine.
+A leap year occurs on any year evenly divisible by 4, but not on a century \
+unless it is divisible by 400.
+How many Sundays fell on the first of the month during the twentieth century \
+(1 Jan 1901 to 31 Dec 2000)?\
+\>", "Text",
+ CellChangeTimes->{3.6386993019913206`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Using Date Functions", "Section",
+ CellChangeTimes->{{3.6386993152799616`*^9, 3.6386993182188168`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dates", "=", 
+   RowBox[{"DateRange", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1901", ",", "01", ",", "01"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2001", ",", "01", ",", "01"}], "}"}], ",", "\"\<Month\>\""}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{"Total", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"DayName", "[", "#", "]"}], "\[Equal]", "Sunday"}], ",", "1", 
+      ",", "0"}], "]"}], "&"}], "/@", "dates"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.638699375754204*^9, 3.6386994329177947`*^9}, {
+   3.638707546624262*^9, 3.638707547307736*^9}, {3.638707640517521*^9, 
+   3.638707645433766*^9}, 3.6395685208703527`*^9}],
+
+Cell[BoxData["171"], "Output",
+ CellChangeTimes->{
+  3.6387075602115517`*^9, {3.6387075925530405`*^9, 3.638707658318904*^9}, 
+   3.638707749716385*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 843},
+WindowMargins->{{Automatic, 0}, {55, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 202, 3, 92, "Title"],
+Cell[785, 27, 203, 3, 51, "Subtitle"],
+Cell[991, 32, 582, 16, 239, "Text"],
+Cell[CellGroupData[{
+Cell[1598, 52, 109, 1, 64, "Section"],
+Cell[CellGroupData[{
+Cell[1732, 57, 731, 20, 46, "Input"],
+Cell[2466, 79, 151, 3, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

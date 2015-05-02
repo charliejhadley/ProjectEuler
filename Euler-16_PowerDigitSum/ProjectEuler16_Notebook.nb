@@ -1,0 +1,92 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2272,         83]
+NotebookOptionsPosition[      1802,         61]
+NotebookOutlinePosition[      2161,         77]
+CellTagsIndexPosition[      2118,         74]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 16", "Title",
+ CellChangeTimes->{{3.6381744897618284`*^9, 3.63817449236736*^9}, {
+  3.6382628803731413`*^9, 3.638262902390021*^9}}],
+
+Cell["Power Digit Sum", "Subtitle",
+ CellChangeTimes->{{3.6381745037052317`*^9, 3.638174511255367*^9}, {
+  3.638262883513088*^9, 3.6382629090892177`*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["2", "16"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.\n\nWhat is \
+the sum of the digits of the number ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["2", "1000"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "?"
+}], "Text",
+ CellChangeTimes->{{3.6382629158977933`*^9, 3.6382629281687183`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Total", "[", 
+  RowBox[{"IntegerDigits", "[", 
+   RowBox[{"2", "^", "1000"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.638262719920306*^9, 3.6382627426514626`*^9}, 
+   3.638262934988079*^9, {3.639567941917492*^9, 3.639567943252679*^9}},
+ FormatType->"InputForm"],
+
+Cell[BoxData["1366"], "Output",
+ CellChangeTimes->{{3.6382627241712294`*^9, 3.6382627431358576`*^9}, 
+   3.63826293689447*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 697},
+WindowMargins->{{Automatic, 353}, {25, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 151, 2, 92, "Title"],
+Cell[734, 26, 154, 2, 51, "Subtitle"],
+Cell[891, 30, 438, 13, 70, "Text"],
+Cell[CellGroupData[{
+Cell[1354, 47, 291, 6, 28, "Input"],
+Cell[1648, 55, 126, 2, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

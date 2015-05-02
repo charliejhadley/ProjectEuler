@@ -1,0 +1,272 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8860,        263]
+NotebookOptionsPosition[      7905,        225]
+NotebookOutlinePosition[      8264,        241]
+CellTagsIndexPosition[      8221,        238]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 21", "Title",
+ CellChangeTimes->{{3.638679863619196*^9, 3.6386798846342545`*^9}, {
+  3.639132299743275*^9, 3.639132299823331*^9}}],
+
+Cell["Amicable Numbers", "Subtitle",
+ CellChangeTimes->{{3.6386798963888187`*^9, 3.6386799005188065`*^9}, {
+  3.639132310128646*^9, 3.639132312583931*^9}}],
+
+Cell["\<\
+Let d(n) be defined as the sum of proper divisors of n (numbers less than n \
+which divide evenly into n).
+If d(a) = b and d(b) = a, where a \[NotEqual] b, then a and b are an amicable \
+pair and each of a and b are called amicable numbers.
+
+For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, \
+55 and 110; therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, \
+71 and 142; so d(284) = 220.
+
+Evaluate the sum of all the amicable numbers under 10000\
+\>", "Text",
+ CellChangeTimes->{3.638679911470442*^9, 3.6391323072245407`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Divisors Revision", "Section",
+ CellChangeTimes->{{3.6391323184550614`*^9, 3.6391323215832615`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"divisors", "[", 
+    RowBox[{"int_Real", ",", "knownPrimes_", ",", "\"\<Sum\>\""}], "]"}], "/;", 
+   RowBox[{"int", "<", 
+    RowBox[{"Max", "[", "knownPrimes", "]"}]}]}], ":=", 
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+     "primeFactors", ",", "\[IndentingNewLine]", "exponents", ",", 
+      "\[IndentingNewLine]", "exponentF"}], "\[IndentingNewLine]", "}"}], ",",
+     "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"exponentF", "[", "primeFactor_", "]"}], ":=", 
+      RowBox[{"Length", "@", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{"NestWhileList", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "*", "primeFactor"}], "&"}], ",", "primeFactor", ",", 
+           RowBox[{
+            RowBox[{"#", "<", "int"}], "&"}]}], "]"}], ",", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Mod", "[", 
+            RowBox[{"int", ",", "#"}], "]"}], "\[Equal]", "0"}], "&"}]}], 
+        "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"primeFactors", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"knownPrimes", "[", 
+         RowBox[{"[", 
+          RowBox[{";;", 
+           RowBox[{
+            RowBox[{"FirstPosition", "[", 
+             RowBox[{"knownPrimes", ",", 
+              RowBox[{"a_", "/;", 
+               RowBox[{"a", ">", "int"}]}]}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Mod", "[", 
+           RowBox[{"int", ",", "#"}], "]"}], "\[Equal]", "0"}], "&"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"exponents", "=", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"exponentF", "[", "#", "]"}], "&"}], "/@", "primeFactors"}], 
+       ")"}]}], "\[IndentingNewLine]", ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Times", "@@", 
+       RowBox[{"(", 
+        RowBox[{"Plus", "@@@", 
+         RowBox[{"MapThread", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"{", "1", "}"}], "~", "Join", "~", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"#1", "^", "i"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", "#2"}], "}"}]}], "]"}]}], "&"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"primeFactors", ",", "exponents"}], "}"}]}], "]"}]}], 
+        ")"}]}], "-", "int"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6391409190560045`*^9, 3.6391409204890213`*^9}, {
+  3.6391544471539946`*^9, 3.6391544504982724`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"primesUnder10100", "=", 
+   RowBox[{
+    RowBox[{"eratosSieve", "[", "100100.", "]"}], "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.639140956021097*^9, 3.6391409743922033`*^9}, {
+   3.6391410794682093`*^9, 3.6391410799695406`*^9}, 3.639154091481697*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"divisors", "[", 
+  RowBox[{"220.", ",", "primesUnder10100", ",", "\"\<Sum\>\""}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6391543019531193`*^9, 3.639154323461379*^9}, {
+  3.639154361099635*^9, 3.639154361413122*^9}, {3.639154391840825*^9, 
+  3.639154452744314*^9}}],
+
+Cell[BoxData["284.`"], "Output",
+ CellChangeTimes->{{3.6391543177474623`*^9, 3.6391543238745384`*^9}, {
+   3.639154361730713*^9, 3.639154453226695*^9}, 3.6392239127327995`*^9}]
+}, Open  ]],
+
+Cell["Need primes:", "Text",
+ CellChangeTimes->{{3.6391409514458723`*^9, 3.6391409542778625`*^9}}],
+
+Cell["Get divisors:", "Text",
+ CellChangeTimes->{{3.6391409807494*^9, 3.6391409852374525`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"divisorsUnder10000", "=", 
+    RowBox[{"Map", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"With", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"dvsrs", "=", 
+           RowBox[{"divisors", "[", 
+            RowBox[{"#", ",", "primesUnder10100", ",", "\"\<Sum\>\""}], 
+            "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"#", ",", "dvsrs", ",", 
+           RowBox[{"divisors", "[", 
+            RowBox[{
+             RowBox[{"N", "@", "dvsrs"}], ",", "primesUnder10100", ",", 
+             "\"\<Sum\>\""}], "]"}]}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+       "\[IndentingNewLine]", "&"}], ",", 
+      RowBox[{"N", "@", 
+       RowBox[{"Range", "[", "10000", "]"}]}]}], "]"}]}], ";"}], "//", 
+  "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.639140986788506*^9, 3.639141025308687*^9}, {
+  3.6391411335545654`*^9, 3.6391411883338895`*^9}, {3.6391412627851458`*^9, 
+  3.6391412630973516`*^9}, {3.6392239170148106`*^9, 3.639223920088974*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "38.72001800000000315549186780117452144623`7.60853546380903", ",", "Null"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.639223961993778*^9, 3.639569055890534*^9}]
+}, Open  ]],
+
+Cell["\<\
+Drop those where the number of divisors is the same as the number:\
+\>", "Text",
+ CellChangeTimes->{{3.639224199467368*^9, 3.6392242138031073`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Total", "[", 
+  RowBox[{
+   RowBox[{"Cases", "[", 
+    RowBox[{"divisorsUnder10000", ",", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"a_", ",", "b_", ",", "c_"}], "}"}], "/;", 
+      RowBox[{
+       RowBox[{"a", "\[Equal]", "c"}], "&&", 
+       RowBox[{"a", "=!=", "b"}]}]}]}], "]"}], "[", 
+   RowBox[{"[", 
+    RowBox[{"All", ",", "1"}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.639141337163521*^9, 3.6391413643083706`*^9}, {
+   3.639154575581459*^9, 3.639154578257872*^9}, {3.6392239368293962`*^9, 
+   3.639223945838276*^9}, 3.639224027884994*^9, {3.6392240902531123`*^9, 
+   3.6392241341158504`*^9}, {3.639568999325602*^9, 3.639569020479986*^9}}],
+
+Cell[BoxData["31626.`"], "Output",
+ CellChangeTimes->{{3.639141347894886*^9, 3.6391413650412254`*^9}, {
+   3.639154229693617*^9, 3.639154232208959*^9}, 3.63915457949906*^9, 
+   3.6392239621278715`*^9, 3.6392240283903494`*^9, {3.6392240909956326`*^9, 
+   3.63922413541679*^9}, 3.6392242315977373`*^9, 3.639569056033917*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 786},
+WindowMargins->{{Automatic, 121}, {Automatic, 88}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 150, 2, 92, "Title"],
+Cell[733, 26, 155, 2, 51, "Subtitle"],
+Cell[891, 30, 574, 12, 163, "Text"],
+Cell[CellGroupData[{
+Cell[1490, 46, 106, 1, 64, "Section"],
+Cell[1599, 49, 2698, 72, 301, "Input"],
+Cell[4300, 123, 326, 7, 28, "Input"],
+Cell[CellGroupData[{
+Cell[4651, 134, 291, 6, 28, "Input"],
+Cell[4945, 142, 176, 2, 28, "Output"]
+}, Open  ]],
+Cell[5136, 147, 98, 1, 30, "Text"],
+Cell[5237, 150, 95, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[5357, 155, 1087, 26, 97, "Input"],
+Cell[6447, 183, 203, 5, 28, "Output"]
+}, Open  ]],
+Cell[6665, 191, 158, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[6848, 198, 692, 16, 28, "Input"],
+Cell[7543, 216, 322, 4, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

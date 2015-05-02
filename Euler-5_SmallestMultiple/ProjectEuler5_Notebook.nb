@@ -1,0 +1,214 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6915,        205]
+NotebookOptionsPosition[      6034,        170]
+NotebookOutlinePosition[      6395,        186]
+CellTagsIndexPosition[      6352,        183]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 5", "Title",
+ CellChangeTimes->{{3.6355299864976044`*^9, 3.635529991435379*^9}, {
+  3.635530575598774*^9, 3.635530575676938*^9}, {3.635531593611895*^9, 
+  3.6355315938462763`*^9}, {3.6369732943055286`*^9, 3.6369732944461126`*^9}, {
+  3.636975808575789*^9, 3.6369758117216396`*^9}}],
+
+Cell["Smallest multiple", "Subtitle",
+ CellChangeTimes->{{3.6355316698853617`*^9, 3.63553167291407*^9}, 
+   3.6369733007075033`*^9, 3.636973776035263*^9}],
+
+Cell["\<\
+2520 is the smallest number that can be divided by each of the numbers from 1 \
+to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the \
+numbers from 1 to 20?\
+\>", "Text",
+ CellChangeTimes->{3.6355300019098396`*^9, 3.6355305928488913`*^9, 
+  3.6355316246077943`*^9, 3.636973308700822*^9, 3.6369737823620663`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Divide by largest common factors", "Section",
+ CellChangeTimes->{{3.639556573595931*^9, 3.639556576948613*^9}, {
+  3.639556642019953*^9, 3.639556646947172*^9}, {3.639558160804178*^9, 
+  3.6395581684203577`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"10", ",", "3000", ",", "10"}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"AllTrue", "[", 
+     RowBox[{
+      RowBox[{"Reverse", "@", "one$10"}], ",", 
+      RowBox[{"Function", "[", 
+       RowBox[{"x", ",", 
+        RowBox[{
+         RowBox[{"Mod", "[", 
+          RowBox[{"#", ",", "x"}], "]"}], "\[Equal]", "0"}]}], "]"}]}], "]"}],
+     "&"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.639556591272915*^9, 3.639556593937325*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "2520", "}"}]], "Output",
+ CellChangeTimes->{{3.639556583320572*^9, 3.639556594435809*^9}}]
+}, Open  ]],
+
+Cell["Only target common factors:", "Text",
+ CellChangeTimes->{{3.63955788057473*^9, 3.6395578982141314`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"factors", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "11", ",", "13", ",", "14", ",", "15", ",", "16", ",", "17", ",", "18", 
+     ",", "19"}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6395566052224417`*^9, 3.639556622193186*^9}, {
+   3.639556675795195*^9, 3.639556675883649*^9}, {3.639557337084387*^9, 
+   3.639557389419426*^9}, {3.639557426007435*^9, 3.6395574516963*^9}, {
+   3.639557491826928*^9, 3.639557493861753*^9}, {3.639557573393024*^9, 
+   3.639557671029464*^9}, {3.639557731105678*^9, 3.6395577435030603`*^9}, 
+   3.639557875413601*^9, {3.63955796963824*^9, 3.639558012933022*^9}, {
+   3.6395615840868273`*^9, 3.639561584982223*^9}}],
+
+Cell["\<\
+Generate integers across a range, note 300,000,000 was found from previous \
+experimentation.\
+\>", "Text",
+ CellChangeTimes->{{3.639557902882847*^9, 3.6395579129069147`*^9}, {
+  3.6395581763977213`*^9, 3.639558187331984*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"range", "=", 
+   RowBox[{"Range", "[", 
+    RowBox[{"20", ",", "300000000", ",", "20"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6395566052224417`*^9, 3.639556622193186*^9}, {
+  3.639556675795195*^9, 3.639556675883649*^9}, {3.639557337084387*^9, 
+  3.639557389419426*^9}, {3.639557426007435*^9, 3.6395574516963*^9}, {
+  3.639557491826928*^9, 3.639557493861753*^9}, {3.639557573393024*^9, 
+  3.639557671029464*^9}, {3.639557731105678*^9, 3.6395577435030603`*^9}, {
+  3.639557875413601*^9, 3.639557900893236*^9}, {3.639558136188464*^9, 
+  3.6395581446723137`*^9}, {3.6395615759773493`*^9, 3.639561576130508*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SelectFirst", "[", 
+   RowBox[{"range", ",", 
+    RowBox[{
+     RowBox[{"AllTrue", "[", 
+      RowBox[{
+       RowBox[{"Reverse", "@", "factors"}], ",", 
+       RowBox[{"Function", "[", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"Mod", "[", 
+           RowBox[{"#", ",", "x"}], "]"}], "\[Equal]", "0"}]}], "]"}]}], 
+      "]"}], "&"}]}], "]"}], "//", "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.6395566052224417`*^9, 3.639556622193186*^9}, {
+  3.639556675795195*^9, 3.639556675883649*^9}, {3.639557337084387*^9, 
+  3.639557389419426*^9}, {3.639557426007435*^9, 3.6395574516963*^9}, {
+  3.639557491826928*^9, 3.639557493861753*^9}, {3.639557573393024*^9, 
+  3.639557671029464*^9}, {3.639557731105678*^9, 3.6395577435030603`*^9}, {
+  3.639557875413601*^9, 3.639557900893236*^9}, {3.639561580736597*^9, 
+  3.63956158863037*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "50.33652000000000015234036254696547985077`7.722483100712886", ",", 
+   "232792560"}], "}"}]], "Output",
+ CellChangeTimes->{3.639557791282854*^9, 3.639557997373618*^9, 
+  3.639558116399337*^9, 3.639558194213023*^9, 3.639561598387662*^9, 
+  3.63956165274796*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"commonDivisors", "[", 
+   RowBox[{"factors_", ",", "intRange_"}], "]"}], ":=", 
+  RowBox[{"SelectFirst", "[", 
+   RowBox[{"intRange", ",", 
+    RowBox[{
+     RowBox[{"AllTrue", "[", 
+      RowBox[{
+       RowBox[{"Reverse", "@", "factors"}], ",", 
+       RowBox[{"Function", "[", 
+        RowBox[{"x", ",", 
+         RowBox[{
+          RowBox[{"Mod", "[", 
+           RowBox[{"#", ",", "x"}], "]"}], "\[Equal]", "0"}]}], "]"}]}], 
+      "]"}], "&"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.639561422180085*^9, 3.639561481979097*^9}}],
+
+Cell[BoxData[
+ RowBox[{"commonFactors", "[", 
+  RowBox[{"factors", ",", "range"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6395616263588047`*^9, 3.6395616330206947`*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1070, 1016},
+WindowMargins->{{282, Automatic}, {93, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 301, 4, 92, "Title"],
+Cell[884, 28, 154, 2, 51, "Subtitle"],
+Cell[1041, 32, 374, 8, 68, "Text"],
+Cell[CellGroupData[{
+Cell[1440, 44, 217, 3, 64, "Section"],
+Cell[CellGroupData[{
+Cell[1682, 51, 516, 15, 28, "Input"],
+Cell[2201, 68, 119, 2, 28, "Output"]
+}, Open  ]],
+Cell[2335, 73, 110, 1, 30, "Text"],
+Cell[2448, 76, 684, 13, 28, "Input"],
+Cell[3135, 91, 236, 5, 30, "Text"],
+Cell[3374, 98, 653, 11, 28, "Input"],
+Cell[CellGroupData[{
+Cell[4052, 113, 889, 20, 28, "Input"],
+Cell[4944, 135, 303, 7, 28, "Output"]
+}, Open  ]],
+Cell[5262, 145, 572, 16, 28, "Input"],
+Cell[5837, 163, 169, 3, 28, "Input"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
