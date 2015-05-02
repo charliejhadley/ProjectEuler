@@ -1,0 +1,196 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5045,        187]
+NotebookOptionsPosition[      4061,        147]
+NotebookOutlinePosition[      4421,        163]
+CellTagsIndexPosition[      4378,        160]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 25", "Title",
+ CellChangeTimes->{{3.638679863619196*^9, 3.6386798846342545`*^9}, {
+  3.638686369499428*^9, 3.6386863695775566`*^9}}],
+
+Cell["Fibonnaci Number", "Subtitle",
+ CellChangeTimes->{{3.6386798963888187`*^9, 3.6386799005188065`*^9}, {
+  3.6386864123239856`*^9, 3.6386864171382236`*^9}}],
+
+Cell["\<\
+The Fibonacci sequence is defined by the recurrence relation:
+
+Fn = Fn\[Minus]1 + Fn\[Minus]2, where F1 = 1 and F2 = 1.
+Hence the first 12 terms will be:
+
+F1 = 1
+F2 = 1
+F3 = 2
+F4 = 3
+F5 = 5
+F6 = 8
+F7 = 13
+F8 = 21
+F9 = 34
+F10 = 55
+F11 = 89
+F12 = 144
+The 12th term, F12, is the first term to contain three digits.
+
+What is the index of the first term in the Fibonacci sequence to contain 1000 \
+digits?\
+\>", "Text",
+ CellChangeTimes->{3.639569627478901*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Memoization", "Section",
+ CellChangeTimes->{{3.6386864192945185`*^9, 3.638686422489932*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Remove", "[", "fib", "]"}]], "Input",
+ CellChangeTimes->{{3.638687050000012*^9, 3.6386870522410517`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"fib", "[", "1", "]"}], "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fib", "[", "2", "]"}], "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fib", "[", "n_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"fib", "[", "n", "]"}], "=", 
+   RowBox[{
+    RowBox[{"fib", "[", 
+     RowBox[{"n", "-", "1"}], "]"}], "+", 
+    RowBox[{"fib", "[", 
+     RowBox[{"n", "-", "2"}], "]"}]}]}]}]}], "Input",
+ CellChangeTimes->{{3.638686423650894*^9, 3.6386864772819347`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"i", "=", "3"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"new", "=", 
+   RowBox[{"fib", "[", "3", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"While", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Length", "[", 
+      RowBox[{"IntegerDigits", "[", "new", "]"}], "]"}], "<", "1000"}], ",", 
+    RowBox[{
+     RowBox[{"new", "=", 
+      RowBox[{"fib", "[", "i", "]"}]}], ";", 
+     RowBox[{"i", "++"}]}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", "i"}], "Input",
+ CellChangeTimes->{{3.638686505879215*^9, 3.6386865549746876`*^9}, {
+  3.6386870227750797`*^9, 3.6386870719719887`*^9}, {3.638687571241885*^9, 
+  3.6386876033675947`*^9}, {3.6386876376186337`*^9, 3.6386876380699043`*^9}, {
+  3.639569804294407*^9, 3.639569805272005*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["i"], "Input",
+ CellChangeTimes->{3.639569797283596*^9}],
+
+Cell[BoxData["4783"], "Output",
+ CellChangeTimes->{3.639569797640534*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", 
+  RowBox[{"IntegerDigits", "[", 
+   RowBox[{"Fibonacci", "[", "4782", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6386874500228567`*^9, 3.638687486847536*^9}}],
+
+Cell[BoxData["1000"], "Output",
+ CellChangeTimes->{{3.638687454941498*^9, 3.638687487238161*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"fib", "[", "100", "]"}]], "Input",
+ CellChangeTimes->{{3.638686479954154*^9, 3.6386864949077587`*^9}}],
+
+Cell[BoxData["354224848179261915075"], "Output",
+ CellChangeTimes->{{3.6386864825326023`*^9, 3.638686495204584*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Fibonacci", "[", "4", "]"}]], "Input",
+ CellChangeTimes->{{3.6386864392608542`*^9, 3.638686461782217*^9}}],
+
+Cell[BoxData["3"], "Output",
+ CellChangeTimes->{{3.6386864441513653`*^9, 3.638686462018685*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 885},
+WindowMargins->{{422, Automatic}, {-31, Automatic}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 152, 2, 92, "Title"],
+Cell[735, 26, 159, 2, 51, "Subtitle"],
+Cell[897, 30, 466, 23, 391, "Text"],
+Cell[CellGroupData[{
+Cell[1388, 57, 98, 1, 64, "Section"],
+Cell[1489, 60, 129, 2, 28, "Input"],
+Cell[1621, 64, 543, 16, 63, "Input"],
+Cell[2167, 82, 792, 20, 80, "Input"],
+Cell[CellGroupData[{
+Cell[2984, 106, 69, 1, 28, "Input"],
+Cell[3056, 109, 73, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3166, 115, 207, 4, 28, "Input"],
+Cell[3376, 121, 97, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3510, 127, 126, 2, 28, "Input"],
+Cell[3639, 131, 116, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3792, 137, 130, 2, 28, "Input"],
+Cell[3925, 141, 96, 1, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

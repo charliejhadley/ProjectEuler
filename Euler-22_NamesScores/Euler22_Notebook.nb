@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      4479,        145]
-NotebookOptionsPosition[      3837,        118]
-NotebookOutlinePosition[      4181,        133]
-CellTagsIndexPosition[      4138,        130]
+NotebookDataLength[      4376,        136]
+NotebookOptionsPosition[      3791,        111]
+NotebookOutlinePosition[      4149,        127]
+CellTagsIndexPosition[      4106,        124]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -46,20 +46,13 @@ What is the total of all the name scores in the file?\
  CellChangeTimes->{3.638679911470442*^9, 3.6391323072245407`*^9, 
   3.6392243226696925`*^9}],
 
-Cell[CellGroupData[{
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"SetDirectory", "[", 
-   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{"FileNames", "[", "\"\<*.txt\>\"", "]"}]}], "Input",
- CellChangeTimes->{{3.639224341689191*^9, 3.6392243618280563`*^9}}],
-
 Cell[BoxData[
- RowBox[{"{", "\<\"p022_names.txt\"\>", "}"}]], "Output",
- CellChangeTimes->{3.6392243626336284`*^9}]
-}, Open  ]],
+ RowBox[{"import", "=", 
+  RowBox[{
+  "Import", "[", 
+   "\"\<https://raw.githubusercontent.com/martinjhnhadley/ProjectEuler/master/\
+Euler-22_NamesScores/p022_names.txt\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.639569479761077*^9, 3.6395695069241667`*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -89,12 +82,12 @@ Cell[BoxData[
        "]"}]}], "&"}], "/@", 
     RowBox[{"Sort", "@", 
      RowBox[{"StringSplit", "[", 
-      RowBox[{
-       RowBox[{"Import", "[", "\"\<p022_names.txt\>\"", "]"}], ",", 
-       "\"\<,\>\""}], "]"}]}]}]}], ";"}]], "Input",
+      RowBox[{"(*", 
+       RowBox[{"Import", "[", "\"\<p022_names.txt\>\"", "]"}], "*)"}], 
+      RowBox[{"import", ",", "\"\<,\>\""}], "]"}]}]}]}], ";"}]], "Input",
  CellChangeTimes->{{3.6392243680524745`*^9, 3.639224416051816*^9}, {
   3.63922458070877*^9, 3.639224618067858*^9}, {3.639224707923958*^9, 
-  3.639224737675707*^9}}],
+  3.639224737675707*^9}, {3.6395694911430264`*^9, 3.639569493615801*^9}}],
 
 Cell[CellGroupData[{
 
@@ -112,13 +105,14 @@ Cell[BoxData[
  CellChangeTimes->{{3.639224797747954*^9, 3.639224823371978*^9}}],
 
 Cell[BoxData["871198282"], "Output",
- CellChangeTimes->{3.6392248239345026`*^9}]
+ CellChangeTimes->{3.6392248239345026`*^9, 3.639569500301059*^9}]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{767, 544},
-WindowMargins->{{Automatic, 33}, {1, Automatic}},
-FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (December 4, 2014)",
+WindowSize->{1280, 1330},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -133,18 +127,15 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 200, 3, 90, "Title"],
-Cell[783, 27, 201, 3, 49, "Subtitle"],
-Cell[987, 32, 722, 14, 163, "Text"],
+Cell[580, 22, 200, 3, 92, "Title"],
+Cell[783, 27, 201, 3, 51, "Subtitle"],
+Cell[987, 32, 722, 14, 144, "Text"],
+Cell[1712, 48, 276, 6, 28, "Input"],
+Cell[1991, 56, 578, 14, 28, "Input"],
+Cell[2572, 72, 697, 17, 28, "Input"],
 Cell[CellGroupData[{
-Cell[1734, 50, 271, 6, 52, "Input"],
-Cell[2008, 58, 115, 2, 31, "Output"]
-}, Open  ]],
-Cell[2138, 63, 578, 14, 52, "Input"],
-Cell[2719, 79, 618, 17, 52, "Input"],
-Cell[CellGroupData[{
-Cell[3362, 100, 364, 11, 31, "Input"],
-Cell[3729, 113, 80, 1, 31, "Output"]
+Cell[3294, 93, 364, 11, 28, "Input"],
+Cell[3661, 106, 102, 1, 28, "Output"]
 }, Open  ]]
 }, Open  ]]
 }

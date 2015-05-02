@@ -1,14 +1,19 @@
 # Number Letter Counts
 
-If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
+Using names.txt (right click and 'Save Link/Target As...'), a 46K text file containing over five-thousand first names, begin by sorting it into alphabetical order. Then working out the alphabetical value for each name, multiply this value by its alphabetical position in the list to obtain a name score.
 
-If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
+For example, when the list is sorted into alphabetical order, COLIN, which is worth 3 + 15 + 12 + 9 + 14 = 53, is the 938th name in the list. So, COLIN would obtain a score of 938 × 53 = 49714.
 
-
-NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
+What is the total of all the name scores in the file?
 
 ```Mathematica
-<<Euler17`;
-splitIntCount[#] & /@ Range[1000] // Total
+import = Import[
+  "https://raw.githubusercontent.com/martinjhnhadley/ProjectEuler/\
+master/Euler-22_NamesScores/p022_names.txt"]
+letterReplacements = {"\"" -> {}}~Join~
+   Thread[CharacterRange["A", "Z"] -> Range[26]];
+scores = Total@Flatten[Characters[#] /. letterReplacements] & /@ 
+   Sort@StringSplit[import, ","];
+Total[Table[i*scores[[i]], {i, Length[scores]}]]
 ```
 

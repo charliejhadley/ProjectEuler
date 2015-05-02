@@ -1,0 +1,211 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7321,        202]
+NotebookOptionsPosition[      6550,        170]
+NotebookOutlinePosition[      6910,        186]
+CellTagsIndexPosition[      6867,        183]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 8", "Title",
+ CellChangeTimes->{{3.6355299864976044`*^9, 3.635529991435379*^9}, {
+  3.635530575598774*^9, 3.635530575676938*^9}, {3.635531593611895*^9, 
+  3.6355315938462763`*^9}, {3.6369732943055286`*^9, 3.6369732944461126`*^9}, {
+  3.636975808575789*^9, 3.636975840195999*^9}, {3.6369762087977*^9, 
+  3.636976209282039*^9}, {3.639570556973773*^9, 3.639570557061357*^9}}],
+
+Cell["Largest Product in a Series", "Subtitle",
+ CellChangeTimes->{{3.6355316698853617`*^9, 3.63553167291407*^9}, 
+   3.6369733007075033`*^9, 3.636973776035263*^9, 3.6369758501974087`*^9, {
+   3.6369762145404625`*^9, 3.6369762169476795`*^9}, {3.639570559919302*^9, 
+   3.639570565319715*^9}}],
+
+Cell["\<\
+The four adjacent digits in the 1000-digit number that have the greatest \
+product are 9 \[Times] 9 \[Times] 8 \[Times] 9 = 5832.\
+\>", "Text",
+ CellChangeTimes->{3.6369762282497034`*^9, 3.639569993931822*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"page", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{
+    "\"\<https://projecteuler.net/problem=8\>\"", ",", "\"\<Plaintext\>\""}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"number", "=", 
+  RowBox[{"FromDigits", "@", 
+   RowBox[{"Flatten", "@", 
+    RowBox[{"IntegerDigits", "@", 
+     RowBox[{"ToExpression", "@", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"StringSplit", "[", 
+        RowBox[{
+         RowBox[{"StringCases", "[", 
+          RowBox[{"page", ",", 
+           RowBox[{
+            RowBox[{"\"\<\\n \>\"", "~~", 
+             RowBox[{"a", ":", 
+              RowBox[{"DigitCharacter", ".."}]}], "~~", "b__", "~~", 
+             "\"\<\\n   \\nF\>\""}], "\[RuleDelayed]", 
+            RowBox[{"StringTrim", "[", 
+             RowBox[{"a", "<>", "b"}], "]"}]}]}], "]"}], ",", "\"\<\\n\>\""}],
+         "]"}]}]}]}]}]}]}]}], "Input",
+ CellChangeTimes->{{3.639570414750196*^9, 3.639570522852491*^9}}],
+
+Cell[BoxData[\
+"73167176531330624919225119674426574742355349194934969835203127745063262395783\
+180169848018694788518438586156078911294949545950173795833195285320880551112540\
+698747158523863050715693290963295227443043557668966489504452445231617318564030\
+987111217223831136222989342338030813533627661428280644448664523874930358907296\
+290491560440772390713810515859307960866701724271218839987979087922749219016997\
+208880937766572733300105336788122023542180975125454059475224352584907711670556\
+013604839586446706324415722155397536978179778461740649551492908625693219784686\
+224828397224137565705605749026140797296865241453510047482166370484403199890008\
+895243450658541227588666881164271714799244429282308634656748139191231628245861\
+786645835912456652947654568284891288314260769004224219022671055626321111109370\
+544217506941658960408719840385096245544436298123098787992724428490918884580156\
+166097919133875499200524063689912560717606588611646710940507754100225698315520\
+005593572972571636269561882670428252483600823257530420752963450"], "Output",
+ CellChangeTimes->{{3.6395704098559513`*^9, 3.639570443057003*^9}, {
+   3.639570475293193*^9, 3.63957052361139*^9}, 3.639571641355545*^9}]
+}, Open  ]],
+
+Cell["\<\
+Find the thirteen adjacent digits in the 1000-digit number that have the \
+greatest product. What is the value of this product?\
+\>", "Text",
+ CellChangeTimes->{3.6395705441532583`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Find sequences of numbers", "Section",
+ CellChangeTimes->{{3.6395705464299088`*^9, 3.6395705510431643`*^9}}],
+
+Cell["Build a function that travels through in jumps of n", "Text",
+ CellChangeTimes->{{3.639570883237803*^9, 3.639570892619842*^9}, {
+  3.6395716757073097`*^9, 3.63957167586484*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"findMaxSet", "[", 
+   RowBox[{"target_", ",", "setSize_"}], "]"}], ":=", 
+  RowBox[{"Block", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"digits", "=", 
+       RowBox[{"IntegerDigits", "[", "target", "]"}]}], ",", 
+      "\[IndentingNewLine]", "sets"}], "\[IndentingNewLine]", "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"sets", "=", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"Take", "[", 
+         RowBox[{"digits", ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", 
+            RowBox[{"i", "+", "setSize", "-", "1"}]}], "}"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", 
+          RowBox[{
+           RowBox[{"Length", "[", "digits", "]"}], "-", "setSize", "-", 
+           "1"}]}], "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"#", ",", 
+         RowBox[{"Times", "@@@", "#"}]}], "}"}], "&"}], "[", 
+      RowBox[{"MaximalBy", "[", 
+       RowBox[{"sets", ",", 
+        RowBox[{
+         RowBox[{"Times", "@@", "#"}], "&"}]}], "]"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6395713623343067`*^9, 3.639571410553981*^9}, {
+   3.639571587621167*^9, 3.63957166619153*^9}, {3.639571718114025*^9, 
+   3.639571757442519*^9}, {3.639571856566325*^9, 3.6395718587652082`*^9}, 
+   3.6395719125074253`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"findMaxSet", "[", 
+  RowBox[{"number", ",", "13"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6395715987951527`*^9, 3.639571635557293*^9}, {
+  3.639571680221489*^9, 3.6395716884893627`*^9}, {3.639571818331368*^9, 
+  3.639571825874954*^9}, {3.639571862835349*^9, 3.639571873633312*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+     "5", ",", "5", ",", "7", ",", "6", ",", "6", ",", "8", ",", "9", ",", 
+      "6", ",", "6", ",", "4", ",", "8", ",", "9", ",", "5"}], "}"}], "}"}], 
+   ",", 
+   RowBox[{"{", "23514624000", "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6395716038032923`*^9, 3.6395717585014477`*^9}, {
+  3.639571818574457*^9, 3.6395718261134644`*^9}, {3.639571860145093*^9, 
+  3.639571873849485*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1280, 1330},
+WindowMargins->{{Automatic, 196}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 392, 5, 92, "Title"],
+Cell[975, 29, 292, 4, 51, "Subtitle"],
+Cell[1270, 35, 219, 4, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1514, 43, 963, 25, 97, "Input"],
+Cell[2480, 70, 1190, 15, 148, "Output"]
+}, Open  ]],
+Cell[3685, 88, 195, 4, 30, "Text"],
+Cell[CellGroupData[{
+Cell[3905, 96, 114, 1, 64, "Section"],
+Cell[4022, 99, 183, 2, 30, "Text"],
+Cell[4208, 103, 1489, 39, 148, "Input"],
+Cell[CellGroupData[{
+Cell[5722, 146, 306, 5, 28, "Input"],
+Cell[6031, 153, 479, 12, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
