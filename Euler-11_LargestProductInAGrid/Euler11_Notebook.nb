@@ -1,0 +1,350 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     12987,        341]
+NotebookOptionsPosition[     12207,        309]
+NotebookOutlinePosition[     12568,        325]
+CellTagsIndexPosition[     12525,        322]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler Problem 11", "Title",
+ CellChangeTimes->{{3.6355299864976044`*^9, 3.635529991435379*^9}, {
+  3.635530575598774*^9, 3.635530575676938*^9}, {3.635531593611895*^9, 
+  3.6355315938462763`*^9}, {3.6369732943055286`*^9, 3.6369732944461126`*^9}, {
+  3.636975808575789*^9, 3.636975840195999*^9}, {3.6369762087977*^9, 
+  3.636976209282039*^9}, {3.6376025120898314`*^9, 3.6376025130660777`*^9}}],
+
+Cell["Largest product in a grid", "Subtitle",
+ CellChangeTimes->{{3.6355316698853617`*^9, 3.63553167291407*^9}, 
+   3.6369733007075033`*^9, 3.636973776035263*^9, 3.6369758501974087`*^9, {
+   3.6369762145404625`*^9, 3.6369762169476795`*^9}, {3.6376025155438747`*^9, 
+   3.6376025197608027`*^9}}],
+
+Cell["\<\
+In the 20x20 grid below, four numbers along a diagonal line have been marked \
+red:\
+\>", "Text",
+ CellChangeTimes->{
+  3.6369762282497034`*^9, {3.637602526254651*^9, 3.637602547095122*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"proj11Page", "=", 
+   RowBox[{
+   "Import", "[", "\"\<https://projecteuler.net/problem=11\>\"", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gridString", "=", 
+   RowBox[{"StringCases", "[", 
+    RowBox[{"proj11Page", ",", 
+     RowBox[{
+      RowBox[{"\"\<\\n \>\"", "~~", 
+       RowBox[{"a", ":", "DigitCharacter"}], "~~", "b__", "~~", 
+       "\"\<\\n  \>\""}], "\[RuleDelayed]", 
+      RowBox[{"a", "<>", "b"}]}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"grid", "=", 
+   RowBox[{"Partition", "[", 
+    RowBox[{
+     RowBox[{"ToExpression", "@", 
+      RowBox[{"DeleteCases", "[", 
+       RowBox[{
+        RowBox[{"Flatten", "@", 
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"gridString", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\< \>\"", ",", "\"\<\\n\>\""}], "}"}]}], "]"}]}], ",", 
+        "\"\<\>\""}], "]"}]}], ",", "20"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"styleGrid", "=", "grid"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"styleGrid", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"6", "+", "i"}], ",", 
+        RowBox[{"8", "+", "i"}]}], "]"}], "]"}], "=", 
+     RowBox[{"Style", "[", 
+      RowBox[{
+       RowBox[{"styleGrid", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"6", "+", "i"}], ",", 
+          RowBox[{"8", "+", "i"}]}], "]"}], "]"}], ",", "Red"}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "4"}], "}"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Grid", "[", 
+  RowBox[{"styleGrid", ",", 
+   RowBox[{"BaseStyle", "\[Rule]", "\"\<Text\>\""}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.637602629372207*^9, 3.6376027455713015`*^9}, {
+  3.637602777170494*^9, 3.6376028600660515`*^9}, {3.6376031021714563`*^9, 
+  3.637603156898122*^9}, {3.637603273987072*^9, 3.6376032805330553`*^9}, {
+  3.637603369779089*^9, 3.6376033757483473`*^9}}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"8", "2", "22", "97", "38", "15", "0", "40", "0", "75", "4", "5", "7", 
+     "78", "52", "12", "50", "77", "91", "8"},
+    {"49", "49", "99", "40", "17", "81", "18", "57", "60", "87", "17", "40", 
+     "98", "43", "69", "48", "4", "56", "62", "0"},
+    {"81", "49", "31", "73", "55", "79", "14", "29", "93", "71", "40", "67", 
+     "53", "88", "30", "3", "49", "13", "36", "65"},
+    {"52", "70", "95", "23", "4", "60", "11", "42", "69", "24", "68", "56", 
+     "1", "32", "56", "71", "37", "2", "36", "91"},
+    {"22", "31", "16", "71", "51", "67", "63", "89", "41", "92", "36", "54", 
+     "22", "40", "40", "28", "66", "33", "13", "80"},
+    {"24", "47", "32", "60", "99", "3", "45", "2", "44", "75", "33", "53", 
+     "78", "36", "84", "20", "35", "17", "12", "50"},
+    {"32", "98", "81", "28", "64", "23", "67", "10", 
+     StyleBox["26",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 0],
+      FrontFaceColor->RGBColor[1, 0, 0],
+      BackFaceColor->RGBColor[1, 0, 0],
+      GraphicsColor->RGBColor[1, 0, 0],
+      FontColor->RGBColor[1, 0, 0]], "38", "40", "67", "59", "54", "70", "66",
+      "18", "38", "64", "70"},
+    {"67", "26", "20", "68", "2", "62", "12", "20", "95", 
+     StyleBox["63",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 0],
+      FrontFaceColor->RGBColor[1, 0, 0],
+      BackFaceColor->RGBColor[1, 0, 0],
+      GraphicsColor->RGBColor[1, 0, 0],
+      FontColor->RGBColor[1, 0, 0]], "94", "39", "63", "8", "40", "91", "66", 
+     "49", "94", "21"},
+    {"24", "55", "58", "5", "66", "73", "99", "26", "97", "17", 
+     StyleBox["78",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 0],
+      FrontFaceColor->RGBColor[1, 0, 0],
+      BackFaceColor->RGBColor[1, 0, 0],
+      GraphicsColor->RGBColor[1, 0, 0],
+      FontColor->RGBColor[1, 0, 0]], "78", "96", "83", "14", "88", "34", "89",
+      "63", "72"},
+    {"21", "36", "23", "9", "75", "0", "76", "44", "20", "45", "35", 
+     StyleBox["14",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 0],
+      FrontFaceColor->RGBColor[1, 0, 0],
+      BackFaceColor->RGBColor[1, 0, 0],
+      GraphicsColor->RGBColor[1, 0, 0],
+      FontColor->RGBColor[1, 0, 0]], "0", "61", "33", "97", "34", "31", "33", 
+     "95"},
+    {"78", "17", "53", "28", "22", "75", "31", "67", "15", "94", "3", "80", 
+     "4", "62", "16", "14", "9", "53", "56", "92"},
+    {"16", "39", "5", "42", "96", "35", "31", "47", "55", "58", "88", "24", 
+     "0", "17", "54", "24", "36", "29", "85", "57"},
+    {"86", "56", "0", "48", "35", "71", "89", "7", "5", "44", "44", "37", 
+     "44", "60", "21", "58", "51", "54", "17", "58"},
+    {"19", "80", "81", "68", "5", "94", "47", "69", "28", "73", "92", "13", 
+     "86", "52", "17", "77", "4", "89", "55", "40"},
+    {"4", "52", "8", "83", "97", "35", "99", "16", "7", "97", "57", "32", 
+     "16", "26", "26", "79", "33", "27", "98", "66"},
+    {"88", "36", "68", "87", "57", "62", "20", "72", "3", "46", "33", "67", 
+     "46", "55", "12", "32", "63", "93", "53", "69"},
+    {"4", "42", "16", "73", "38", "25", "39", "11", "24", "94", "72", "18", 
+     "8", "46", "29", "32", "40", "62", "76", "36"},
+    {"20", "69", "36", "41", "72", "30", "23", "88", "34", "62", "99", "69", 
+     "82", "67", "59", "85", "74", "4", "36", "16"},
+    {"20", "73", "35", "29", "78", "31", "90", "1", "74", "31", "49", "71", 
+     "48", "86", "81", "16", "23", "57", "5", "54"},
+    {"1", "70", "54", "71", "83", "51", "54", "69", "16", "92", "33", "48", 
+     "61", "43", "52", "1", "89", "19", "67", "48"}
+   },
+   AutoDelete->False,
+   BaseStyle->"Text",
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{{3.6376028864350758`*^9, 3.6376029899690523`*^9}, {
+   3.6376030347155232`*^9, 3.637603086263637*^9}, {3.6376031299278316`*^9, 
+   3.6376031576517224`*^9}, 3.6376033366822505`*^9, 3.637603376429478*^9, 
+   3.639578362545165*^9}]
+}, Open  ]],
+
+Cell["\<\
+The product of these numbers if 26 x 63 x 78 x 14 = 1788696.
+
+What is the greatest product of four adjacent numbers in the same direction \
+(up, down, left, right or diagnolly) in the 20 x 20 grid?\
+\>", "Text",
+ CellChangeTimes->{{3.6376033862843056`*^9, 3.637603444135482*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Adjacent Matrix Elements", "Section",
+ CellChangeTimes->{{3.6376038522838554`*^9, 3.6376038607131076`*^9}}],
+
+Cell["Get all neighbours, ignoring the sides by using Quiet:", "Text",
+ CellChangeTimes->{{3.637604782915329*^9, 3.637604812961604*^9}, {
+  3.637604862460636*^9, 3.637604872814949*^9}, {3.639579363546432*^9, 
+  3.639579389653804*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"getNeighbours", "[", 
+   RowBox[{"row_", ",", "col_"}], "]"}], ":=", 
+  RowBox[{"Quiet", "@", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{
+      "vertical", ",", "\[IndentingNewLine]", "horiz", ",", 
+       "\[IndentingNewLine]", "leftdiag", ",", "\[IndentingNewLine]", 
+       "rightdiag"}], "\[IndentingNewLine]", "}"}], ",", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"vertical", "=", 
+       RowBox[{"grid", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"row", "-", "1"}], ";;", 
+           RowBox[{"row", "+", "2"}]}], ",", "col"}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"horiz", "=", 
+       RowBox[{"grid", "[", 
+        RowBox[{"[", 
+         RowBox[{"row", ",", 
+          RowBox[{
+           RowBox[{"col", "-", "1"}], ";;", 
+           RowBox[{"col", "+", "2"}]}]}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"leftdiag", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"grid", "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"row", "+", "i"}], ",", 
+            RowBox[{"col", "+", "i"}]}], "]"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "0", ",", "1", ",", "2"}], "}"}]}], "}"}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"rightdiag", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"grid", "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"row", "+", "i"}], ",", 
+            RowBox[{"col", "-", "i"}]}], "]"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "0", ",", 
+             RowBox[{"-", "1"}], ",", 
+             RowBox[{"-", "2"}]}], "}"}]}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"Cases", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+         "vertical", ",", "horiz", ",", "leftdiag", ",", "rightdiag"}], "}"}],
+         ",", 
+        RowBox[{"{", 
+         RowBox[{"Repeated", "[", 
+          RowBox[{"_Integer", ",", 
+           RowBox[{"{", "4", "}"}]}], "]"}], "}"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.637604434058403*^9, 3.637604743487443*^9}, 
+   3.637604778743393*^9, {3.639578429639175*^9, 3.639578572986165*^9}, {
+   3.639578646710397*^9, 3.639578656621895*^9}, {3.639578700192952*^9, 
+   3.639578719910042*^9}, {3.6395789475135927`*^9, 3.639578981393194*^9}, {
+   3.63957901785258*^9, 3.639579021092491*^9}, {3.639579058507699*^9, 
+   3.639579097863949*^9}, {3.639579228430999*^9, 3.63957927354198*^9}, {
+   3.6395793562403297`*^9, 3.639579356665872*^9}, 3.639579393103051*^9, {
+   3.639579515444872*^9, 3.639579529382633*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"allSets", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"getNeighbours", "[", 
+       RowBox[{"Sequence", "@@", "#"}], "]"}], "&"}], ",", 
+     RowBox[{"Tuples", "[", 
+      RowBox[{
+       RowBox[{"Range", "[", "20", "]"}], ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"Max", "[", 
+  RowBox[{"Times", "@@@", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{"allSets", ",", "1"}], "]"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.6376045182820663`*^9, 3.6376045223719444`*^9}, 
+   3.6376049761130695`*^9, 3.639578579583551*^9, {3.639578755989809*^9, 
+   3.6395787561022882`*^9}, {3.639578875920944*^9, 3.6395789232118196`*^9}, {
+   3.639579024199688*^9, 3.6395790273504353`*^9}, {3.639579169129635*^9, 
+   3.639579193913323*^9}, {3.6395792838433733`*^9, 3.63957929160854*^9}, 
+   3.639579408962346*^9}],
+
+Cell[BoxData["70600674"], "Output",
+ CellChangeTimes->{{3.639579295496813*^9, 3.639579331916614*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1078, 1170},
+WindowMargins->{{Automatic, 297}, {Automatic, 65}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 397, 5, 92, "Title"],
+Cell[980, 29, 294, 4, 51, "Subtitle"],
+Cell[1277, 35, 200, 5, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1502, 44, 1989, 55, 114, "Input"],
+Cell[3494, 101, 3967, 78, 391, "Output"]
+}, Open  ]],
+Cell[7476, 182, 289, 6, 68, "Text"],
+Cell[CellGroupData[{
+Cell[7790, 192, 113, 1, 64, "Section"],
+Cell[7906, 195, 234, 3, 30, "Text"],
+Cell[8143, 200, 3004, 76, 284, "Input"],
+Cell[CellGroupData[{
+Cell[11172, 280, 891, 21, 46, "Input"],
+Cell[12066, 303, 101, 1, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
