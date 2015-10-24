@@ -1,0 +1,2552 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     99383,       2543]
+NotebookOptionsPosition[     96281,       2435]
+NotebookOutlinePosition[     96635,       2451]
+CellTagsIndexPosition[     96592,       2448]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Euler 27", "Title",
+ CellChangeTimes->{{3.654712630873126*^9, 3.6547126334253893`*^9}}],
+
+Cell["\<\
+Euler discovered the remarkable quadratic formula:
+
+n\.b2 + n + 41
+
+It turns out that the formula will produce 40 primes for the consecutive \
+values n = 0 to 39. However, when n = 40, 402 + 40 + 41 = 40(40 + 1) + 41 is \
+divisible by 41, and certainly when n = 41, 41\.b2 + 41 + 41 is clearly \
+divisible by 41.
+
+The incredible formula  n\.b2 \[Minus] 79n + 1601 was discovered, which \
+produces 80 primes for the consecutive values n = 0 to 79. The product of the \
+coefficients, \[Minus]79 and 1601, is \[Minus]126479.
+
+Considering quadratics of the form:
+
+n\.b2 + an + b, where |a| < 1000 and |b| < 1000
+
+where |n| is the modulus/absolute value of n
+e.g. |11| = 11 and |\[Minus]4| = 4
+Find the product of the coefficients, a and b, for the quadratic expression \
+that produces the maximum number of primes for consecutive values of n, \
+starting with n = 0.\
+\>", "Text",
+ CellChangeTimes->{3.654712638550647*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Nest", "Section",
+ CellChangeTimes->{{3.6547142142320747`*^9, 3.6547142159959908`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"values", "=", 
+   RowBox[{"{", "0", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"n", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"While", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"PrimeQ", "[", 
+     RowBox[{"Last", "[", "values", "]"}], "]"}], "||", 
+    RowBox[{
+     RowBox[{"Last", "[", "values", "]"}], "\[Equal]", "0"}]}], ",", 
+   RowBox[{
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"values", ",", 
+      RowBox[{
+       RowBox[{"n", "^", "2"}], "+", "n", "+", "41"}]}], "]"}], ";", 
+    RowBox[{"n", "++"}], ";"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"n", "-", "1"}]}], "Input",
+ CellChangeTimes->{{3.654714216772142*^9, 3.654714260732642*^9}, {
+  3.6547142972972937`*^9, 3.654714475477006*^9}, {3.6547145644502697`*^9, 
+  3.654714582941842*^9}, {3.654714619171386*^9, 3.654714619397912*^9}, {
+  3.654714677775009*^9, 3.6547147249697533`*^9}, {3.6547147683878813`*^9, 
+  3.6547147856038027`*^9}, {3.6547149399403677`*^9, 3.654714948187076*^9}, {
+  3.654715020411315*^9, 3.654715087016046*^9}, {3.654715122923407*^9, 
+  3.6547151241819677`*^9}}],
+
+Cell[BoxData["40"], "Output",
+ CellChangeTimes->{{3.654715124934752*^9, 3.654715146257564*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"nestBuilder", "[", 
+   RowBox[{"a_", ",", "b_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"values", "=", 
+       RowBox[{"{", "0", "}"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"n", "=", "0"}]}], "\[IndentingNewLine]", "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"While", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"PrimeQ", "[", 
+         RowBox[{"Last", "[", "values", "]"}], "]"}], "||", 
+        RowBox[{
+         RowBox[{"Last", "[", "values", "]"}], "\[Equal]", "0"}]}], ",", 
+       RowBox[{
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"values", ",", 
+          RowBox[{
+           RowBox[{"n", "^", "2"}], "+", 
+           RowBox[{"a", "*", "n"}], "+", "b"}]}], "]"}], ";", 
+        RowBox[{"n", "++"}], ";"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<Primes\>\"", "\[Rule]", 
+        RowBox[{"n", "-", "1"}]}], ",", 
+       RowBox[{"\"\<a\>\"", "\[Rule]", "a"}], ",", 
+       RowBox[{"\"\<b\>\"", "\[Rule]", "b"}]}], "|>"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6547151543205223`*^9, 3.65471523969282*^9}, {
+  3.654716165030607*^9, 3.654716165190495*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"nestBuilder", "[", 
+  RowBox[{
+   RowBox[{"-", "79"}], ",", "1601"}], "]"}]], "Input",
+ CellChangeTimes->{{3.654715216572816*^9, 3.654715218936224*^9}, {
+  3.6547161452716637`*^9, 3.654716156070307*^9}, {3.654716448471014*^9, 
+  3.65471645918791*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Primes\"\>", "\[Rule]", "80"}], ",", 
+   RowBox[{"\<\"a\"\>", "\[Rule]", 
+    RowBox[{"-", "79"}]}], ",", 
+   RowBox[{"\<\"b\"\>", "\[Rule]", "1601"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{{3.6547152193605843`*^9, 3.654715240912697*^9}, {
+  3.654716156882161*^9, 3.654716167590745*^9}, {3.654716441213626*^9, 
+  3.6547164603723793`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"generateBs", "[", "a_", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"nestBuilder", "[", 
+     RowBox[{"a", ",", "b"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"b", ",", 
+      RowBox[{"-", "999"}], ",", "999"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.654715273939665*^9, {3.654715388928993*^9, 3.654715393267022*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"output", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"nestBuilder", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"a", ",", 
+       RowBox[{"-", "999"}], ",", "999"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"b", ",", 
+       RowBox[{"-", "999"}], ",", "999"}], "}"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"output", "=", 
+   RowBox[{"Flatten", "[", "output", "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.654715424871193*^9, 3.654715442627446*^9}, {
+  3.654715541920451*^9, 3.654715566356151*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"sel", "=", 
+  RowBox[{"output", "[", 
+   RowBox[{"[", 
+    RowBox[{";;", "50"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.654715569266973*^9, 3.6547155771221046`*^9}, {
+  3.654715723680456*^9, 3.65471572431293*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "998"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "997"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "996"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "995"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "994"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "993"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "992"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "991"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "990"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "989"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "988"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "987"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "986"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "985"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "984"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "983"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "982"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "981"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "980"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "979"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "978"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "977"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "976"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "975"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "974"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "973"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "972"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "971"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "970"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "969"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "968"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "967"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "966"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "965"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "964"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "963"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "962"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "961"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "960"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "959"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "958"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "957"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "956"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "955"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "954"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "953"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "952"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "951"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", 
+      RowBox[{"-", "999"}]}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "950"}]}]}], "\[RightAssociation]"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.654715572793236*^9, 3.6547155779623003`*^9}, 
+   3.654715724917637*^9, 3.654716236232152*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MaximalBy", "[", 
+  RowBox[{"output", ",", 
+   RowBox[{"Key", "[", "\"\<Primes\>\"", "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.654715725711788*^9, 3.654715745293803*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\[LeftAssociation]", 
+   RowBox[{
+    RowBox[{"\<\"Primes\"\>", "\[Rule]", "71"}], ",", 
+    RowBox[{"\<\"a\"\>", "\[Rule]", 
+     RowBox[{"-", "61"}]}], ",", 
+    RowBox[{"\<\"b\"\>", "\[Rule]", "971"}]}], "\[RightAssociation]"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.654715739477556*^9, 3.654715747059388*^9}, 
+   3.654716004518825*^9, 3.654716237719092*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"primes", "=", 
+   RowBox[{"output", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "\"\<Primes\>\""}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.654716269414535*^9, 3.654716293661562*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Histogram", "[", "primes", "]"}]], "Input",
+ CellChangeTimes->{{3.654716294895681*^9, 3.654716301314372*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[0.987148, 0.8073604000000001, 0.49470040000000004`], EdgeForm[{
+    Opacity[0.44799999999999995`], Thickness[Small]}], {}, 
+    {RGBColor[0.987148, 0.8073604000000001, 0.49470040000000004`], EdgeForm[{
+     Opacity[0.44799999999999995`], Thickness[Small]}], 
+     RectangleBox[{0., 0}, {2., 3884521},
+      RoundingRadius->0], RectangleBox[{2., 0}, {4., 93225},
+      RoundingRadius->0], RectangleBox[{4., 0}, {6., 12485},
+      RoundingRadius->0], RectangleBox[{6., 0}, {8., 3340},
+      RoundingRadius->0], RectangleBox[{8., 0}, {10., 1290},
+      RoundingRadius->0], RectangleBox[{10., 0}, {12., 561},
+      RoundingRadius->0], RectangleBox[{12., 0}, {14., 259},
+      RoundingRadius->0], RectangleBox[{14., 0}, {16., 133},
+      RoundingRadius->0], RectangleBox[{16., 0}, {18., 60},
+      RoundingRadius->0], RectangleBox[{18., 0}, {20., 38},
+      RoundingRadius->0], RectangleBox[{20., 0}, {22., 22},
+      RoundingRadius->0], RectangleBox[{22., 0}, {24., 8},
+      RoundingRadius->0], RectangleBox[{24., 0}, {26., 6},
+      RoundingRadius->0], RectangleBox[{26., 0}, {28., 4},
+      RoundingRadius->0], RectangleBox[{28., 0}, {30., 4},
+      RoundingRadius->0], RectangleBox[{30., 0}, {32., 4},
+      RoundingRadius->0], RectangleBox[{32., 0}, {34., 3},
+      RoundingRadius->0], RectangleBox[{34., 0}, {36., 2},
+      RoundingRadius->0], RectangleBox[{36., 0}, {38., 2},
+      RoundingRadius->0], RectangleBox[{38., 0}, {40., 2},
+      RoundingRadius->0], RectangleBox[{40., 0}, {42., 2},
+      RoundingRadius->0], RectangleBox[{42., 0}, {44., 2},
+      RoundingRadius->0], RectangleBox[{44., 0}, {46., 2},
+      RoundingRadius->0], RectangleBox[{46., 0}, {48., 2},
+      RoundingRadius->0], RectangleBox[{48., 0}, {50., 2},
+      RoundingRadius->0], RectangleBox[{50., 0}, {52., 2},
+      RoundingRadius->0], RectangleBox[{52., 0}, {54., 2},
+      RoundingRadius->0], RectangleBox[{54., 0}, {56., 2},
+      RoundingRadius->0], RectangleBox[{56., 0}, {58., 2},
+      RoundingRadius->0], RectangleBox[{58., 0}, {60., 2},
+      RoundingRadius->0], RectangleBox[{60., 0}, {62., 2},
+      RoundingRadius->0], RectangleBox[{62., 0}, {64., 2},
+      RoundingRadius->0], RectangleBox[{64., 0}, {66., 2},
+      RoundingRadius->0], RectangleBox[{66., 0}, {68., 2},
+      RoundingRadius->0], RectangleBox[{68., 0}, {70., 2},
+      RoundingRadius->0], RectangleBox[{70., 0}, {72., 2},
+      RoundingRadius->
+       0]}, {}, {}}, {{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{-1.44, 0},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  PlotRange->{{0., 72.}, {All, All}},
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.6547163085692987`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Sort", "[", "primes", "]"}], "[", 
+  RowBox[{"[", 
+   RowBox[{
+    RowBox[{"-", "5"}], ";;"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6547163110402946`*^9, 3.654716322765552*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"67", ",", "68", ",", "69", ",", "70", ",", "71"}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.6547163234368677`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"61", "*", "971"}]], "Input",
+ CellChangeTimes->{{3.654716017851673*^9, 3.654716021532345*^9}}],
+
+Cell[BoxData["59231"], "Output",
+ CellChangeTimes->{3.65471602224831*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Query", "[", 
+   RowBox[{"Select", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#a", "\[Equal]", 
+        RowBox[{"-", "79"}]}], "&&", 
+       RowBox[{"#b", "\[Equal]", 
+        RowBox[{"-", "999"}]}]}], ")"}], "&"}], "]"}], "]"}], "@", 
+  "output"}]], "Input",
+ CellChangeTimes->{{3.6547157763736887`*^9, 3.654715979530772*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\[LeftAssociation]", 
+   RowBox[{
+    RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+    RowBox[{"\<\"a\"\>", "\[Rule]", 
+     RowBox[{"-", "79"}]}], ",", 
+    RowBox[{"\<\"b\"\>", "\[Rule]", 
+     RowBox[{"-", "999"}]}]}], "\[RightAssociation]"}], "}"}]], "Output",
+ CellChangeTimes->{{3.654715813138319*^9, 3.654715822784573*^9}, 
+   3.654715855529818*^9, {3.654715885881701*^9, 3.654715947099023*^9}, 
+   3.654715984002103*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"%", "[", 
+  RowBox[{"[", 
+   RowBox[{"All", ",", "\"\<Primes\>\""}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6547156875599422`*^9, 3.654715691780052*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "1", ",", "2", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+   ",", "2", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+   "1", ",", "2", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "2", 
+   ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "2", ",", "1", ",", 
+   "1", ",", "1", ",", "2", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+   ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+   "1", ",", "3", ",", "1", ",", "1", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{3.654715692270837*^9}]
+}, Open  ]],
+
+Cell[BoxData["Max"], "Input",
+ CellChangeTimes->{{3.654715696233159*^9, 3.6547157074938927`*^9}}],
+
+Cell[BoxData["MaximalBy"], "Input",
+ CellChangeTimes->{{3.654715598388937*^9, 3.654715600861217*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"output", "[", 
+  RowBox[{"[", "2", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.654715520650013*^9, 3.654715524810563*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   FrameBox[GridBox[{
+      {
+       ItemBox[
+        TagBox[
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "999"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "997"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "996"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "995"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "994"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "993"}]}]}], "\[RightAssociation]"}], ",", 
+           TemplateBox[{"1986"},
+            "OutputSizeLimit`Skeleton",
+            DisplayFunction->(FrameBox[
+              RowBox[{"\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}],
+               Background -> GrayLevel[0.75], 
+              BaseStyle -> {
+               "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                ShowStringCharacters -> False}, BaselinePosition -> Baseline, 
+              ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
+              GrayLevel[0.75], RoundingRadius -> 7]& )], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "994"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "995"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "996"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "3"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "997"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "998"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "999"}]}], 
+            "\[RightAssociation]"}]}], "}"}],
+         Short[#, 5]& ],
+        BaseStyle->{Deployed -> False},
+        StripOnInput->False]},
+      {GridBox[{
+         {
+          TagBox[
+           TooltipBox[
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "FEStrings", "sizeBriefExplanation"], StandardForm],
+               ImageSizeCache->{58., {2., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarCategory",
+             StripOnInput->False],
+            StyleBox[
+             DynamicBox[
+              ToBoxes[
+               FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"], 
+               StandardForm]], DynamicUpdating -> True, StripOnInput -> 
+             False]],
+           Annotation[#, 
+            Style[
+             Dynamic[
+              FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"]], 
+             DynamicUpdating -> True], "Tooltip"]& ], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm],
+               ImageSizeCache->{49., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 145, 23756146286845824187, 5/2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm],
+               ImageSizeCache->{54., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 145, 23756146286845824187, 5 2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{40., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 145, 23756146286845824187, Infinity],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm],
+               ImageSizeCache->{72., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           ButtonFunction:>FrontEndExecute[{
+              FrontEnd`SetOptions[
+              FrontEnd`$FrontEnd, 
+               FrontEnd`PreferencesSettings -> {"Page" -> "Evaluation"}], 
+              FrontEnd`FrontEndToken["PreferencesDialog"]}],
+           Evaluator->None,
+           Method->"Preemptive"]}
+        },
+        AutoDelete->False,
+        FrameStyle->GrayLevel[0.85],
+        GridBoxDividers->{"Columns" -> {False, {True}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{2}}}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxDividers->{
+      "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+       "RowsIndexed" -> {}},
+     GridBoxItemSize->{
+      "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], 
+         Offset[1.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}],
+    Background->RGBColor[0.9657, 0.9753, 0.9802],
+    FrameMargins->{{12, 12}, {0, 15}},
+    FrameStyle->GrayLevel[0.85],
+    RoundingRadius->5,
+    StripOnInput->False],
+   Deploy,
+   DefaultBaseStyle->"Deploy"],
+  Out[145]]], "Output",
+ CellChangeTimes->{3.654715525493978*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"generateBs", "[", "1", "]"}]], "Input",
+ CellChangeTimes->{{3.654715276740448*^9, 3.6547152786433363`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   FrameBox[GridBox[{
+      {
+       ItemBox[
+        TagBox[
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "999"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "998"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "997"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "996"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "995"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "994"}]}]}], "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", 
+              RowBox[{"-", "993"}]}]}], "\[RightAssociation]"}], ",", 
+           TemplateBox[{"1985"},
+            "OutputSizeLimit`Skeleton",
+            DisplayFunction->(FrameBox[
+              RowBox[{"\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}],
+               Background -> GrayLevel[0.75], 
+              BaseStyle -> {
+               "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                ShowStringCharacters -> False}, BaselinePosition -> Baseline, 
+              ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
+              GrayLevel[0.75], RoundingRadius -> 7]& )], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "993"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "994"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "995"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "996"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "997"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "998"}]}], 
+            "\[RightAssociation]"}], ",", 
+           RowBox[{"\[LeftAssociation]", 
+            RowBox[{
+             RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+             RowBox[{"\<\"b\"\>", "\[Rule]", "999"}]}], 
+            "\[RightAssociation]"}]}], "}"}],
+         Short[#, 5]& ],
+        BaseStyle->{Deployed -> False},
+        StripOnInput->False]},
+      {GridBox[{
+         {
+          TagBox[
+           TooltipBox[
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "FEStrings", "sizeBriefExplanation"], StandardForm],
+               ImageSizeCache->{58., {2., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarCategory",
+             StripOnInput->False],
+            StyleBox[
+             DynamicBox[
+              ToBoxes[
+               FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"], 
+               StandardForm]], DynamicUpdating -> True, StripOnInput -> 
+             False]],
+           Annotation[#, 
+            Style[
+             Dynamic[
+              FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"]], 
+             DynamicUpdating -> True], "Tooltip"]& ], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm],
+               ImageSizeCache->{49., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 143, 23756146286845824187, 5/2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm],
+               ImageSizeCache->{54., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 143, 23756146286845824187, 5 2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{40., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 143, 23756146286845824187, Infinity],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm],
+               ImageSizeCache->{72., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           ButtonFunction:>FrontEndExecute[{
+              FrontEnd`SetOptions[
+              FrontEnd`$FrontEnd, 
+               FrontEnd`PreferencesSettings -> {"Page" -> "Evaluation"}], 
+              FrontEnd`FrontEndToken["PreferencesDialog"]}],
+           Evaluator->None,
+           Method->"Preemptive"]}
+        },
+        AutoDelete->False,
+        FrameStyle->GrayLevel[0.85],
+        GridBoxDividers->{"Columns" -> {False, {True}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{2}}}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxDividers->{
+      "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+       "RowsIndexed" -> {}},
+     GridBoxItemSize->{
+      "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], 
+         Offset[1.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}],
+    Background->RGBColor[0.9657, 0.9753, 0.9802],
+    FrameMargins->{{12, 12}, {0, 15}},
+    FrameStyle->GrayLevel[0.85],
+    RoundingRadius->5,
+    StripOnInput->False],
+   Deploy,
+   DefaultBaseStyle->"Deploy"],
+  Out[143]]], "Output",
+ CellChangeTimes->{3.6547152790503283`*^9, 3.654715395573515*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Initial", "Section",
+ CellChangeTimes->{{3.654712694668419*^9, 3.65471269612221*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Remove", "[", "formulaBuilde", "]"}]], "Input",
+ CellChangeTimes->{{3.65471289614133*^9, 3.654712899346808*^9}, {
+  3.6547141335617447`*^9, 3.654714134462386*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"formulaBuilder", "[", 
+    RowBox[{"a_", ",", "b_"}], "]"}], "/;", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Abs", "[", "a", "]"}], "<", "1000"}], "&&", 
+    RowBox[{
+     RowBox[{"Abs", "[", "b", "]"}], "<", "1000"}]}]}], ":=", 
+  RowBox[{
+   RowBox[{"n", "^", "2"}], "+", 
+   RowBox[{"a", "*", "n"}], "+", "b"}]}]], "Input",
+ CellChangeTimes->{{3.654712717073782*^9, 3.654712762992185*^9}, {
+  3.654712882105586*^9, 3.654712893995365*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"countPrimes", "[", 
+    RowBox[{"a_", ",", "b_"}], "]"}], "/;", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Abs", "[", "a", "]"}], "<", "1000"}], "&&", 
+    RowBox[{
+     RowBox[{"Abs", "[", "b", "]"}], "<", "1000"}]}]}], ":=", 
+  RowBox[{"<|", 
+   RowBox[{
+    RowBox[{"\"\<Primes\>\"", "->", 
+     RowBox[{"Length", "@", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"n", "^", "2"}], "+", 
+           RowBox[{"a", "*", "n"}], "+", "b"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"n", ",", "40"}], "}"}]}], "]"}], ",", "PrimeQ"}], 
+       "]"}]}]}], ",", 
+    RowBox[{"\"\<a\>\"", "\[Rule]", "a"}], ",", 
+    RowBox[{"\"\<b\>\"", "\[Rule]", "b"}]}], "|>"}]}]], "Input",
+ CellChangeTimes->{{3.654713087455324*^9, 3.654713100781363*^9}, {
+  3.654713234551888*^9, 3.654713292091875*^9}, {3.654713846941041*^9, 
+  3.65471394201256*^9}, {3.654714016781664*^9, 3.654714017465114*^9}, {
+  3.6547141217067757`*^9, 3.654714121871072*^9}, {3.6547141784593887`*^9, 
+  3.654714188131895*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"countPrimes", "[", 
+  RowBox[{"2", ",", "2"}], "]"}]], "Input",
+ CellChangeTimes->{{3.654713856999552*^9, 3.6547138616534433`*^9}, {
+  3.654713904111251*^9, 3.654713905321416*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Primes\"\>", "\[Rule]", "18"}], ",", 
+   RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+   RowBox[{"\<\"b\"\>", "\[Rule]", "2"}]}], "\[RightAssociation]"}]], "Output",\
+
+ CellChangeTimes->{
+  3.654713862169965*^9, {3.654713905620425*^9, 3.654713943373045*^9}, 
+   3.654714019132738*^9, {3.6547141234923267`*^9, 3.6547141440895042`*^9}, {
+   3.654714181404027*^9, 3.654714189312698*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"generateBs", "[", "a_", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"countPrimes", "[", 
+     RowBox[{"a", ",", "b"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"b", ",", 
+      RowBox[{"-", "41"}], ",", "41"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.654713962227727*^9, 3.6547140026833143`*^9}, {
+  3.6547140446428328`*^9, 3.654714048715704*^9}, {3.654714145017723*^9, 
+  3.6547141458119507`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"generateBs", "[", "1", "]"}]], "Input",
+ CellChangeTimes->{{3.654713996021701*^9, 3.6547139975299463`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "9"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "41"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "40"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "20"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "39"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "38"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "25"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "37"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "36"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "22"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "35"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "34"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "19"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "33"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "32"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "47"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "31"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "30"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "44"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "29"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "28"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "15"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "27"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "26"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "37"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "25"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "24"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "29"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "23"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "22"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "13"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "21"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "20"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "44"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "19"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "18"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "26"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "17"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "16"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "17"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "15"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "14"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "43"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "13"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "12"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "32"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "11"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "10"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "22"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "8"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "31"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "7"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "6"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "27"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "5"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "4"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "24"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "3"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "2"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "49"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", 
+      RowBox[{"-", "1"}]}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "0"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "32"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "1"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "2"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "14"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "3"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "4"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "29"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "5"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "6"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "31"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "7"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "8"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "13"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "9"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "10"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "48"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "11"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "12"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "18"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "13"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "14"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "11"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "15"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "16"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "59"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "17"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "18"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "25"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "19"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "20"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "14"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "21"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "22"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "28"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "23"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "24"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "28"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "25"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "26"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "16"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "27"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "28"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "34"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "29"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "30"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "35"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "31"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "32"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "11"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "33"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "34"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "24"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "35"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "36"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "36"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "37"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "38"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "17"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "39"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "0"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "40"}]}], "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"Primes\"\>", "\[Rule]", "39"}], ",", 
+     RowBox[{"\<\"a\"\>", "\[Rule]", "1"}], ",", 
+     RowBox[{"\<\"b\"\>", "\[Rule]", "41"}]}], "\[RightAssociation]"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.6547139983166847`*^9, 3.6547140498249807`*^9}, {
+  3.654714124790248*^9, 3.654714147318555*^9}, {3.6547141827831573`*^9, 
+  3.6547141907550592`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"createNumbers", "[", "a_", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"formula", "[", 
+     RowBox[{"a", ",", "b", ",", "n"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"b", ",", 
+      RowBox[{"-", "9"}], ",", "9"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "1", ",", "5"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6547129735628366`*^9, 3.6547130527935677`*^9}, {
+   3.65471311235303*^9, 3.654713126305621*^9}, {3.654713178272155*^9, 
+   3.654713185462407*^9}, {3.654713304568355*^9, 3.65471331875454*^9}, {
+   3.654713460097068*^9, 3.654713462140271*^9}, {3.654713583923203*^9, 
+   3.6547136073605747`*^9}, 3.6547137731620903`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"createNumbers", "[", "2", "]"}]], "Input",
+ CellChangeTimes->{{3.654713040351144*^9, 3.654713042804604*^9}, {
+  3.654713284630865*^9, 3.65471328476717*^9}, {3.654713745485468*^9, 
+  3.654713746731277*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "6"}], ",", 
+     RowBox[{"-", "1"}], ",", "6", ",", "15", ",", "26"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "5"}], ",", "0", ",", "7", ",", "16", ",", "27"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "4"}], ",", "1", ",", "8", ",", "17", ",", "28"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "2", ",", "9", ",", "18", ",", "29"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", "3", ",", "10", ",", "19", ",", "30"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", "4", ",", "11", ",", "20", ",", "31"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "5", ",", "12", ",", "21", ",", "32"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "6", ",", "13", ",", "22", ",", "33"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "7", ",", "14", ",", "23", ",", "34"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "8", ",", "15", ",", "24", ",", "35"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "9", ",", "16", ",", "25", ",", "36"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "10", ",", "17", ",", "26", ",", "37"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "11", ",", "18", ",", "27", ",", "38"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"7", ",", "12", ",", "19", ",", "28", ",", "39"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"8", ",", "13", ",", "20", ",", "29", ",", "40"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"9", ",", "14", ",", "21", ",", "30", ",", "41"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "15", ",", "22", ",", "31", ",", "42"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"11", ",", "16", ",", "23", ",", "32", ",", "43"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"12", ",", "17", ",", "24", ",", "33", ",", "44"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.6547134630778522`*^9, 3.654713553524658*^9, {3.6547135870493813`*^9, 
+   3.6547136090945177`*^9}, {3.654713741470458*^9, 3.654713774224481*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "6"}], ",", 
+       RowBox[{"-", "5"}], ",", 
+       RowBox[{"-", "4"}], ",", 
+       RowBox[{"-", "3"}], ",", 
+       RowBox[{"-", "2"}], ",", 
+       RowBox[{"-", "1"}], ",", "0", ",", "1", ",", "2", ",", "3", ",", "4", 
+       ",", "5", ",", "6", ",", "7", ",", "8", ",", "9", ",", "10", ",", "11",
+        ",", "12"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "0", ",", "1", ",", "2", ",", "3", ",", "4", 
+       ",", "5", ",", "6", ",", "7", ",", "8", ",", "9", ",", "10", ",", "11",
+        ",", "12", ",", "13", ",", "14", ",", "15", ",", "16", ",", "17"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "6", ",", "7", ",", "8", ",", "9", ",", "10", ",", "11", ",", "12", ",",
+        "13", ",", "14", ",", "15", ",", "16", ",", "17", ",", "18", ",", 
+       "19", ",", "20", ",", "21", ",", "22", ",", "23", ",", "24"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "15", ",", "16", ",", "17", ",", "18", ",", "19", ",", "20", ",", "21", 
+       ",", "22", ",", "23", ",", "24", ",", "25", ",", "26", ",", "27", ",", 
+       "28", ",", "29", ",", "30", ",", "31", ",", "32", ",", "33"}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "26", ",", "27", ",", "28", ",", "29", ",", "30", ",", "31", ",", "32", 
+       ",", "33", ",", "34", ",", "35", ",", "36", ",", "37", ",", "38", ",", 
+       "39", ",", "40", ",", "41", ",", "42", ",", "43", ",", "44"}], "}"}]}],
+     "}"}], ",", "PrimeQ"}], "]"}]], "Input",
+ CellChangeTimes->{{3.654713616263887*^9, 3.6547136214944563`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{3.6547136218736553`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"countPrimes", "[", "a_", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<Primes\>\"", "\[Rule]", 
+       RowBox[{"Length", "@", 
+        RowBox[{"Select", "[", 
+         RowBox[{
+          RowBox[{"formula", "[", 
+           RowBox[{"a", ",", "b", ",", "n"}], "]"}], ",", "PrimeQ"}], 
+         "]"}]}]}], ",", 
+      RowBox[{"\"\<a\>\"", "\[Rule]", "a"}], ",", 
+      RowBox[{"\"\<b\>\"", "\[Rule]", "b"}]}], "|>"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"b", ",", 
+      RowBox[{"-", "9"}], ",", "9"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "1", ",", "100"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6547133324974613`*^9, 3.6547133502156754`*^9}, 
+   3.654713394829073*^9, {3.654713470721622*^9, 3.654713516657352*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"countPrimes", "[", "2", "]"}]], "Input",
+ CellChangeTimes->{{3.6547133961084146`*^9, 3.65471339823463*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Select", "::", "normal"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Nonatomic expression expected at position \
+\[NoBreak]\\!\\(1\\)\[NoBreak] in \
+\[NoBreak]\\!\\(Select[\\(\\(\\(\\(-6\\)\\), PrimeQ\\)\\)]\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/normal\\\", \
+ButtonNote -> \\\"Select::normal\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.654713518290598*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Select", "::", "normal"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Nonatomic expression expected at position \
+\[NoBreak]\\!\\(1\\)\[NoBreak] in \
+\[NoBreak]\\!\\(Select[\\(\\(\\(\\(-1\\)\\), PrimeQ\\)\\)]\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/normal\\\", \
+ButtonNote -> \\\"Select::normal\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.654713518338585*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Select", "::", "normal"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Nonatomic expression expected at position \
+\[NoBreak]\\!\\(1\\)\[NoBreak] in \[NoBreak]\\!\\(Select[\\(\\(6, \
+PrimeQ\\)\\)]\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/normal\\\", ButtonNote -> \
+\\\"Select::normal\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.654713518388939*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Select :: \
+normal\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
+calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6547135183986607`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   FrameBox[GridBox[{
+      {
+       ItemBox[
+        TagBox[
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             TemplateBox[{"89"},
+              "OutputSizeLimit`Skeleton",
+              DisplayFunction->(FrameBox[
+                
+                RowBox[{
+                 "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+                Background -> GrayLevel[0.75], 
+                BaseStyle -> {
+                 "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                  ShowStringCharacters -> False}, BaselinePosition -> 
+                Baseline, ContentPadding -> False, FrameMargins -> 1, 
+                FrameStyle -> GrayLevel[0.75], RoundingRadius -> 7]& )], ",", 
+             
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}], ",", 
+             RowBox[{"\[LeftAssociation]", 
+              RowBox[{
+               RowBox[{"\<\"Primes\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"a\"\>", "\[Rule]", "2"}], ",", 
+               RowBox[{"\<\"b\"\>", "\[Rule]", 
+                RowBox[{"-", "9"}]}]}], "\[RightAssociation]"}]}], "}"}], ",", 
+           TemplateBox[{"17"},
+            "OutputSizeLimit`Skeleton",
+            DisplayFunction->(FrameBox[
+              RowBox[{"\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}],
+               Background -> GrayLevel[0.75], 
+              BaseStyle -> {
+               "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                ShowStringCharacters -> False}, BaselinePosition -> Baseline, 
+              ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
+              GrayLevel[0.75], RoundingRadius -> 7]& )], ",", 
+           RowBox[{"{", 
+            TemplateBox[{"1"},
+             "OutputSizeLimit`Skeleton",
+             DisplayFunction->(FrameBox[
+               
+               RowBox[{
+                "\" \[CenterEllipsis]\"", #, "\"\[CenterEllipsis] \""}], 
+               Background -> GrayLevel[0.75], 
+               BaseStyle -> {
+                "Deploy", FontColor -> GrayLevel[1], FontSize -> Smaller, 
+                 ShowStringCharacters -> False}, BaselinePosition -> Baseline,
+                ContentPadding -> False, FrameMargins -> 1, FrameStyle -> 
+               GrayLevel[0.75], RoundingRadius -> 7]& )], "}"}]}], "}"}],
+         Short[#, 5]& ],
+        BaseStyle->{Deployed -> False},
+        StripOnInput->False]},
+      {GridBox[{
+         {
+          TagBox[
+           TooltipBox[
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "FEStrings", "sizeBriefExplanation"], StandardForm],
+               ImageSizeCache->{58., {2., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarCategory",
+             StripOnInput->False],
+            StyleBox[
+             DynamicBox[
+              ToBoxes[
+               FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"], 
+               StandardForm]], DynamicUpdating -> True, StripOnInput -> 
+             False]],
+           Annotation[#, 
+            Style[
+             Dynamic[
+              FEPrivate`FrontEndResource["FEStrings", "sizeExplanation"]], 
+             DynamicUpdating -> True], "Tooltip"]& ], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm],
+               ImageSizeCache->{49., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowLess"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 97, 23755304168696842592, 5/2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm],
+               ImageSizeCache->{54., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowMore"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 97, 23755304168696842592, 5 2],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{40., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeShowAll"], 
+                StandardForm],
+               ImageSizeCache->{40., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           
+           ButtonFunction:>OutputSizeLimit`ButtonFunction[
+            Identity, 97, 23755304168696842592, Infinity],
+           Enabled->True,
+           Evaluator->Automatic,
+           Method->"Queued"], 
+          ButtonBox[
+           PaneSelectorBox[{False->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm],
+               ImageSizeCache->{72., {0., 8.}}],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControl",
+             StripOnInput->False], True->
+            StyleBox[
+             StyleBox[
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource["FEStrings", "sizeChangeLimit"], 
+                StandardForm]],
+              StripOnInput->False,
+              DynamicUpdating->True], "SuggestionsBarControlActive",
+             StripOnInput->False]}, Dynamic[
+             CurrentValue["MouseOver"]],
+            Alignment->Center,
+            FrameMargins->0,
+            ImageSize->{Automatic, 25}],
+           Appearance->None,
+           ButtonFunction:>FrontEndExecute[{
+              FrontEnd`SetOptions[
+              FrontEnd`$FrontEnd, 
+               FrontEnd`PreferencesSettings -> {"Page" -> "Evaluation"}], 
+              FrontEnd`FrontEndToken["PreferencesDialog"]}],
+           Evaluator->None,
+           Method->"Preemptive"]}
+        },
+        AutoDelete->False,
+        FrameStyle->GrayLevel[0.85],
+        GridBoxDividers->{"Columns" -> {False, {True}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{2}}}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{
+      "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+       "RowsIndexed" -> {}},
+     GridBoxDividers->{
+      "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+       "RowsIndexed" -> {}},
+     GridBoxItemSize->{
+      "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+       "RowsIndexed" -> {}},
+     GridBoxSpacings->{"Columns" -> {
+         Offset[0.27999999999999997`], {
+          Offset[0.5599999999999999]}, 
+         Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+         Offset[0.2], 
+         Offset[1.2], {
+          Offset[0.4]}, 
+         Offset[0.2]}, "RowsIndexed" -> {}}],
+    Background->RGBColor[0.9657, 0.9753, 0.9802],
+    FrameMargins->{{12, 12}, {0, 15}},
+    FrameStyle->GrayLevel[0.85],
+    RoundingRadius->5,
+    StripOnInput->False],
+   Deploy,
+   DefaultBaseStyle->"Deploy"],
+  Out[97]]], "Output",
+ CellChangeTimes->{3.6547133986097383`*^9, 3.6547134340318108`*^9, 
+  3.654713518461018*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.654713322579466*^9, 3.654713324486936*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "@", 
+  RowBox[{"Select", "[", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"formula", "[", 
+       RowBox[{"a", ",", "b", ",", "n"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"b", ",", 
+        RowBox[{"-", "9"}], ",", "9"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "1", ",", "100"}], "}"}]}], "]"}], ",", "PrimeQ"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.6547133618538237`*^9, 3.654713390122801*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{{3.654713043308899*^9, 3.654713054340507*^9}, {
+  3.654713180663385*^9, 3.6547131866778793`*^9}, {3.654713244054943*^9, 
+  3.654713320281259*^9}, {3.654713367677886*^9, 3.6547133911940937`*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1052, 944},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 23, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 93, 1, 92, "Title"],
+Cell[676, 25, 927, 24, 353, "Text"],
+Cell[CellGroupData[{
+Cell[1628, 53, 93, 1, 64, "Section"],
+Cell[CellGroupData[{
+Cell[1746, 58, 1118, 26, 80, "Input"],
+Cell[2867, 86, 95, 1, 28, "Output"]
+}, Open  ]],
+Cell[2977, 90, 1336, 35, 148, "Input"],
+Cell[CellGroupData[{
+Cell[4338, 129, 275, 6, 28, "Input"],
+Cell[4616, 137, 433, 10, 28, "Output"]
+}, Open  ]],
+Cell[5064, 150, 388, 11, 28, "Input"],
+Cell[5455, 163, 601, 17, 46, "Input"],
+Cell[CellGroupData[{
+Cell[6081, 184, 246, 6, 28, "Input"],
+Cell[6330, 192, 14019, 354, 301, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20386, 551, 200, 4, 28, "Input"],
+Cell[20589, 557, 406, 10, 28, "Output"]
+}, Open  ]],
+Cell[21010, 570, 238, 6, 28, "Input"],
+Cell[CellGroupData[{
+Cell[21273, 580, 133, 2, 28, "Input"],
+Cell[21409, 584, 3177, 62, 232, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24623, 651, 221, 6, 28, "Input"],
+Cell[24847, 659, 154, 4, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25038, 668, 118, 2, 28, "Input"],
+Cell[25159, 672, 73, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25269, 678, 388, 12, 28, "Input"],
+Cell[25660, 692, 473, 11, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26170, 708, 184, 4, 28, "Input"],
+Cell[26357, 714, 622, 10, 46, "Output"]
+}, Open  ]],
+Cell[26994, 727, 97, 1, 28, "Input"],
+Cell[27094, 730, 101, 1, 28, "Input"],
+Cell[CellGroupData[{
+Cell[27220, 735, 148, 3, 28, "Input"],
+Cell[27371, 740, 11908, 291, 159, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39316, 1036, 131, 2, 28, "Input"],
+Cell[39450, 1040, 11800, 284, 159, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51299, 1330, 91, 1, 64, "Section"],
+Cell[51393, 1333, 187, 3, 28, "Input"],
+Cell[51583, 1338, 486, 14, 28, "Input"],
+Cell[52072, 1354, 1120, 30, 46, "Input"],
+Cell[CellGroupData[{
+Cell[53217, 1388, 204, 4, 28, "Input"],
+Cell[53424, 1394, 457, 10, 28, "Output"]
+}, Open  ]],
+Cell[53896, 1407, 465, 12, 28, "Input"],
+Cell[CellGroupData[{
+Cell[54386, 1423, 131, 2, 28, "Input"],
+Cell[54520, 1427, 20242, 462, 369, "Output"]
+}, Open  ]],
+Cell[74777, 1892, 713, 16, 28, "Input"],
+Cell[CellGroupData[{
+Cell[75515, 1912, 229, 4, 28, "Input"],
+Cell[75747, 1918, 2147, 56, 80, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[77931, 1979, 1699, 39, 97, "Input"],
+Cell[79633, 2020, 89, 2, 28, "Output"]
+}, Open  ]],
+Cell[79737, 2025, 835, 22, 28, "Input"],
+Cell[CellGroupData[{
+Cell[80597, 2051, 131, 2, 28, "Input"],
+Cell[80731, 2055, 536, 11, 24, "Message"],
+Cell[81270, 2068, 536, 11, 24, "Message"],
+Cell[81809, 2081, 523, 11, 24, "Message"],
+Cell[82335, 2094, 533, 11, 24, "Message"],
+Cell[82871, 2107, 12503, 296, 159, "Output"]
+}, Open  ]],
+Cell[95389, 2406, 92, 1, 28, "Input"],
+Cell[CellGroupData[{
+Cell[95506, 2411, 490, 14, 28, "Input"],
+Cell[95999, 2427, 242, 3, 28, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
